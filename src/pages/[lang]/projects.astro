@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Hero from '../../components/Hero.astro';
+import CTASection from '../../components/CTASection.astro';
+
+// Define valid language paths
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'ar' } }
+  ];
+}
+
+// Get the language parameter from URL
+const { lang = 'en' } = Astro.params;
+
+// Define translations
+const translations = {
+  en: {
+    title: "Coming Soon - Precision Crafts",
+    description: "Our new website is coming soon. Stay tuned for updates!",
+    navLinks: [
+      { name: "Home", url: `/${lang}/` },
+      { name: "Services", url: `/${lang}/services` },
+      { name: "Projects", url: `/${lang}/projects` },
+      { name: "About", url: `/${lang}/about` },
+      { name: "Contact", url: `/${lang}/contact` }
+    ],
+    heroTitle: "Coming Soon",
+    heroSubtitle: "We're Building Something Great",
+    heroText: "Our new website is under construction. We're working hard to bring you the best experience. Stay tuned for updates!",
+    subscribeSection: {
+      title: "Get Notified When We Launch",
+      text: "Subscribe to our newsletter to be the first to know when our new website goes live.",
+      placeholderText: "Your email address",
+      buttonText: "Notify Me"
+    },
+    contactSection: {
+      title: "Need to get in touch?",
+      text: "If you need immediate assistance, please contact us directly.",
+      buttonText: "Contact Us"
+    },
+    footer: {
+      address: "123 Construction Avenue, Dubai, UAE",
+      phone: "+971 4 123 4567",
+      email: "info@precisioncrafts.com",
+      copyright: "© 2025 Precision Crafts. All rights reserved."
+    }
+  },
+  ar: {
+    title: "قريبًا - بريسيجن كرافتس",
+    description: "موقعنا الجديد قريبًا. ترقبوا التحديثات!",
+    navLinks: [
+      { name: "الرئيسية", url: `/${lang}/` },
+      { name: "الخدمات", url: `/${lang}/services` },
+      { name: "المشاريع", url: `/${lang}/projects` },
+      { name: "من نحن", url: `/${lang}/about` },
+      { name: "اتصل بنا", url: `/${lang}/contact` }
+    ],
+    heroTitle: "قريبًا",
+    heroSubtitle: "نحن نبني شيئًا رائعًا",
+    heroText: "موقعنا الجديد قيد الإنشاء. نحن نعمل بجد لنقدم لكم أفضل تجربة. ترقبوا التحديثات!",
+    subscribeSection: {
+      title: "احصل على إشعار عند الإطلاق",
+      text: "اشترك في نشرتنا الإخبارية لتكون أول من يعرف عندما يتم إطلاق موقعنا الجديد.",
+      placeholderText: "عنوان بريدك الإلكتروني",
+      buttonText: "أخطرني"
+    },
+    contactSection: {
+      title: "هل تحتاج إلى التواصل معنا؟",
+      text: "إذا كنت بحاجة إلى مساعدة فورية، يرجى الاتصال بنا مباشرة.",
+      buttonText: "اتصل بنا"
+    },
+    footer: {
+      address: "123 شارع البناء، دبي، الإمارات العربية المتحدة",
+      phone: "+971 4 123 4567",
+      email: "info@precisioncrafts.com",
+      copyright: "© 2025 بريسيجن كرافتس. جميع الحقوق محفوظة."
+    }
+  }
+};
+
+// TypeScript fix: Type assertion for language key
+const t = translations[lang as keyof typeof translations] || translations.en;
+const isArabic = lang === 'ar';
+---
+
+<BaseLayout title={t.title} description={t.description} lang={lang}>
+  <!-- NAVBAR -->
+  <Navbar links={t.navLinks} lang={lang} ctaText={t.contactSection.buttonText} />
+
+  <!-- HERO -->
+  <Hero
+    title={t.heroTitle}
+    subtitle={t.heroSubtitle}
+    text={t.heroText}
+    image="/images/coming-soon-hero.jpg"
+    buttons={[
+      { text: t.contactSection.buttonText, url: `/${lang}/contact`, style: 'bg-primary-600 text-white hover:bg-primary-700' },
+    ]}
+  />
+
+  <!-- SUBSCRIBE SECTION -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-4">{t.subscribeSection.title}</h2>
+        <p class="text-lg text-gray-600 mb-8">{t.subscribeSection.text}</p>
+        
+        <!-- Progress bar -->
+        <div class="w-full bg-gray-200 rounded-full h-2 mb-12">
+          <div class="bg-primary-600 h-2 rounded-full w-3/4"></div>
+        </div>
+        
+        <!-- Subscribe form -->
+        <form class="flex flex-col sm:flex-row gap-3 justify-center">
+          <input 
+            type="email" 
+            placeholder={t.subscribeSection.placeholderText} 
+            class={`px-4 py-2 flex-grow border border-gray-300 rounded ${isArabic ? "text-right" : "text-left"}`}
+            required
+          />
+          <button 
+            type="submit" 
+            class="bg-primary-600 text-white px-6 py-2 rounded font-bold hover:bg-primary-700 transition-colors">
+            {t.subscribeSection.buttonText}
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION -->
+  <CTASection
+    title={t.contactSection.title}
+    text={t.contactSection.text}
+    buttonText={t.contactSection.buttonText}
+    lang={lang}
+  />
+</BaseLayout>

@@ -1,0 +1,157 @@
+---
+// Updated Navbar.astro - With bigger logo extending outside
+export interface NavLink { name: string; url: string }
+export interface Language { code: string; name: string }
+
+const { 
+  links, 
+  lang, 
+  ctaText,
+  languages = [
+    { code: 'en', name: 'English' },
+    { code: 'ar', name: 'العربية' },
+  ] 
+} = Astro.props as {
+  links: NavLink[]
+  lang: string
+  ctaText: string
+  languages?: Language[]
+}
+
+const currentPath = Astro.url.pathname.replace(/^\/[a-z]{2}/, '');
+
+// Get the alternate language
+const altLang = lang === 'en' ? 'ar' : 'en';
+const altLangName = lang === 'en' ? 'العربية' : 'English';
+const switchLanguageUrl = currentPath ? `/${altLang}${currentPath}` : `/${altLang}/`;
+
+// Set the text direction based on language
+const isRTL = lang === 'ar';
+---
+
+<nav class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-40 ">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo - larger and positioned to extend outside navbar -->
+      <a href={`/${lang}/`} class="flex-shrink-0 absolute -bottom-6 z-10">
+        <img 
+          src="/images/logo.png" 
+          alt="Precision Crafts logo" 
+          class="h-28 w-auto" 
+        />
+      </a>
+
+      <!-- Menu and actions container with more left padding to make room for logo -->
+      <div class="flex items-center justify-end w-full">
+        <!-- Desktop menu -->
+        <div class="hidden lg:flex lg:items-center">
+          <ul class="flex ml-5">
+            {links.map((link) => (
+              <li class="px-4">
+                <a
+                  href={link.url}
+                  class={`text-gray-800 font-medium hover:text-primary-500 transition-colors duration-150 ${isRTL ? 'font-arabic' : ''} ${Astro.url.pathname === link.url ? 'text-primary-900' : ''}`}
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Language switcher and CTA -->
+        <div class={`hidden lg:flex items-center gap-4 ml-6 ${isRTL ? 'lg:justify-end' : 'lg:justify-start'}`}>
+          <!-- Language Switcher with Hero style -->
+          <a 
+            href={switchLanguageUrl}
+            class={`px-6 py-2 rounded-md font-medium border border-gray-300 text-gray-700 hover:bg-gray-50 transition ${isRTL ? 'font-arabic' : ''}`}
+            dir={isRTL ? 'rtl' : 'ltr'}
+          >
+            {altLangName}
+          </a>
+
+          <!-- CTA Button with Hero style -->
+          <a
+            href={`/${lang}/contact`}
+            class={`px-6 py-2 rounded-md font-medium text-white bg-primary-600 hover:bg-primary-700 transition ${isRTL ? 'font-arabic' : ''}`}
+            dir={isRTL ? 'rtl' : 'ltr'}
+          >
+            {ctaText}
+          </a>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button
+          type="button"
+          class="lg:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          data-collapse-toggle="mobile-menu"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu, toggle classes based on menu state -->
+  <div class="lg:hidden hidden" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1 mt-16"> <!-- Added extra top margin for logo space -->
+      <!-- Menu links -->
+      {links.map((link) => (
+        <a
+          href={link.url}
+          class={`block px-3 py-2 rounded-md text-base font-medium ${isRTL ? 'text-right font-arabic' : ''} ${
+            Astro.url.pathname === link.url 
+              ? 'bg-primary-50 text-primary-600' 
+              : 'text-gray-700 hover:bg-gray-50 hover:text-primary-600'
+          }`}
+        >
+          {link.name}
+        </a>
+      ))}
+      
+      <!-- Mobile action buttons with Hero style -->
+      <div class={`flex flex-wrap mt-4 gap-2 ${isRTL ? 'justify-end' : 'justify-start'}`}>
+        <a 
+          href={switchLanguageUrl}
+          class={`flex-1 px-6 py-3 text-center rounded-md font-medium border border-gray-300 text-gray-700 hover:bg-gray-50 transition ${isRTL ? 'font-arabic' : ''}`}
+          dir={isRTL ? 'rtl' : 'ltr'}
+        >
+          {altLangName}
+        </a>
+        
+        <a
+          href={`/${lang}/contact`}
+          class={`flex-1 px-6 py-3 text-center font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600 transition ${isRTL ? 'font-arabic' : ''}`}
+          dir={isRTL ? 'rtl' : 'ltr'}
+        >
+          {ctaText}
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<style>
+  /* Ensure consistent spacing in RTL mode */
+  [dir="rtl"] nav li {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  /* Adjust RTL-specific positioning for logo */
+  [dir="rtl"] nav a.flex-shrink-0 {
+    left: auto;
+    right: 2rem;
+  }
+  
+  /* RTL menu positioning adjustment */
+  [dir="rtl"] nav ul.flex {
+    margin-left: 0;
+    margin-right: 7rem;
+  }
+</style>

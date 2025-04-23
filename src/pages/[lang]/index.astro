@@ -1,0 +1,287 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Hero from '../../components/Hero.astro';
+import Stats from '../../components/Stats.astro';
+import ServicesSection from '../../components/ServicesSection.astro';
+import ProjectsSection from '../../components/ProjectsSection.astro';
+import WhyChooseUs from '../../components/WhyChooseUs.astro';
+import CTASection from '../../components/CTASection.astro';
+
+// Define valid language paths
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'ar' } }
+  ];
+}
+
+// Get the language parameter from URL
+const { lang = 'en' } = Astro.params;
+
+// Define translations - this block MUST come BEFORE any usage of translations
+const translations = {
+  en: {
+    title: "Precision Crafts - Construction Excellence",
+    description: "Building the future with precision and excellence",
+    navLinks: [
+      { name: "Home", url: `/${lang}/` },
+      { name: "Services", url: `/${lang}/services` },
+      { name: "Projects", url: `/${lang}/projects` },
+      { name: "About", url: `/${lang}/about` },
+      { name: "Contact", url: `/${lang}/contact` }
+    ],
+    heroTitle: "Building Tomorrow With Precision",
+    heroSubtitle: "Excellence in Construction",
+    heroText: "We build structures that stand the test of time with cutting-edge technology, innovative methods, and unmatched craftsmanship.",
+    heroButton: "Our Services",
+    learnMoreButton: "Learn More",
+    experienceYears: "15+",
+    experienceText: "Years of Experience",
+    projectsCompleted: "200+",
+    projectsText: "Projects Completed",
+    services: {
+      title: "Our Services",
+      subtitle: "What We Offer",
+      items: [
+        {
+          title: "Residential Construction",
+          description: "Luxury homes and residential complexes built with precision and care.",
+          image: "/images/services/residential.jpg",
+          link: `/${lang}/services/residential`
+        },
+        {
+          title: "Commercial Projects",
+          description: "Office buildings, retail spaces, and commercial facilities designed for success.",
+          image: "/images/services/commercial.jpg",
+          link: `/${lang}/services/commercial`
+        },
+        {
+          title: "Industrial Facilities",
+          description: "Manufacturing plants, warehouses, and industrial complexes built to specification.",
+          image: "/images/services/industrial.jpg",
+          link: `/${lang}/services/industrial`
+        },
+        {
+          title: "Infrastructure",
+          description: "Roads, bridges, and public works projects that connect communities.",
+          image: "/images/services/infrastructure.jpg",
+          link: `/${lang}/services/infrastructure`
+        }
+      ]
+    },
+    projects: {
+      title: "Featured Projects",
+      viewAll: "View All Projects",
+      items: [
+        {
+          title: "Al Noor Tower",
+          category: "Commercial",
+          image: "/images/projects/project1.jpg",
+          link: `/${lang}/projects/al-noor-tower`
+        },
+        {
+          title: "Harmony Residences",
+          category: "Residential",
+          image: "/images/projects/project2.jpg",
+          link: `/${lang}/projects/harmony-residences`
+        },
+        {
+          title: "Horizon Industrial Complex",
+          category: "Industrial",
+          image: "/images/projects/project3.jpg",
+          link: `/${lang}/projects/horizon-industrial`
+        }
+      ]
+    },
+    whyChooseUs: {
+      title: "Why Choose Us",
+      items: [
+        {
+          title: "Quality Craftsmanship",
+          description: "We bring precision and attention to detail to every aspect of construction."
+        },
+        {
+          title: "Innovative Solutions",
+          description: "Using cutting-edge technology and methods to deliver exceptional results."
+        },
+        {
+          title: "Timely Delivery",
+          description: "We understand the importance of completing projects on schedule."
+        },
+        {
+          title: "Customer Satisfaction",
+          description: "Your vision and requirements are our top priority throughout the process."
+        }
+      ]
+    },
+    callToAction: {
+      title: "Ready to Start Your Project?",
+      text: "Contact us today to discuss your construction needs and get a free consultation.",
+      buttonText: "Contact Us"
+    },
+    footer: {
+      address: "123 Construction Avenue, Dubai, UAE",
+      phone: "+971 4 123 4567",
+      email: "info@precisioncrafts.com",
+      copyright: "© 2025 Precision Crafts. All rights reserved."
+    }
+  },
+  ar: {
+    title: "بريسيجن كرافتس - التميز في البناء",
+    description: "بناء المستقبل بدقة وتميز",
+    navLinks: [
+      { name: "الرئيسية", url: `/${lang}/` },
+      { name: "الخدمات", url: `/${lang}/services` },
+      { name: "المشاريع", url: `/${lang}/projects` },
+      { name: "من نحن", url: `/${lang}/about` },
+      { name: "اتصل بنا", url: `/${lang}/contact` }
+    ],
+    heroTitle:"بناء الغد بحرفية ودقة "  ,
+    heroSubtitle: "التميز في البناء",
+    heroText: "نبني وفق أعلى معايير الجودة، مستخدمين أحدث التقنيات وأساليب مبتكرة."   ,
+    heroButton: "خدماتنا",
+    learnMoreButton: "اعرف المزيد",
+    experienceYears: "+15",
+    experienceText: "سنوات من الخبرة",
+    projectsCompleted: "+200",
+    projectsText: "مشروع مكتمل",
+    services: {
+      title: "خدماتنا",
+      subtitle: "ما نقدمه هو مجموعة من الخدمات المتكاملة في كل ما يتعلق بالبناء",
+      items: [
+        {
+          title: "البناء السكني",
+          description: " منازل فاخرة ومجمعات سكنية مبنية بدقة واهتمام تلبي جميع الاحتياجات.",
+          image: "/images/services/residential.jpg",
+          link: `/${lang}/services/residential`
+        },
+        {
+          title: "المشاريع التجارية",
+          description: "مباني المكاتب والمساحات التجارية والمرافق التجارية المصممة للنجاح.",
+          image: "/images/services/commercial.jpg",
+          link: `/${lang}/services/commercial`
+        },
+        {
+          title: "المنشآت الصناعية",
+          description: "مصانع ومستودعات ومجمعات صناعية مبنية حسب المواصفات.",
+          image: "/images/services/industrial.jpg",
+          link: `/${lang}/services/industrial`
+        },
+        {
+          title: "البنية التحتية",
+          description: "مشاريع الطرق والجسور والأشغال العامة التي تربط المجتمعات.",
+          image: "/images/services/infrastructure.jpg",
+          link: `/${lang}/services/infrastructure`
+        }
+      ]
+    },
+    projects: {
+      title: "مشاريع مميزة",
+      viewAll: "عرض جميع المشاريع",
+      items: [
+        {
+          title: "برج النور",
+          category: "تجاري",
+          image: "/images/projects/project1.jpg",
+          link: `/${lang}/projects/al-noor-tower`
+        },
+        {
+          title: "هارموني ريزيدنسز",
+          category: "سكني",
+          image: "/images/projects/project2.jpg",
+          link: `/${lang}/projects/harmony-residences`
+        },
+        {
+          title: "مجمع هورايزن الصناعي",
+          category: "صناعي",
+          image: "/images/projects/project3.jpg",
+          link: `/${lang}/projects/horizon-industrial`
+        }
+      ]
+    },
+    whyChooseUs: {
+      title: "لماذا تختارنا",
+      items: [
+        {
+          title: "حرفية عالية الجودة",
+          description: "نحن نقدم الدقة والاهتمام بالتفاصيل في كل جانب من جوانب البناء."
+        },
+        {
+          title: "حلول مبتكرة",
+          description: "استخدام التكنولوجيا والأساليب المتطورة لتقديم نتائج استثنائية."
+        },
+        {
+          title: "التسليم في الوقت المحدد",
+          description: "نحن نتفهم أهمية إكمال المشاريع في الموعد المحدد."
+        },
+        {
+          title: "رضا العملاء",
+          description: "رؤيتك ومتطلباتك هي أولويتنا القصوى طوال العملية."
+        }
+      ]
+    },
+    callToAction: {
+      title: "هل أنت جاهز لبدء مشروعك؟",
+      text: "اتصل بنا اليوم لمناقشة احتياجات البناء الخاصة بك والحصول على استشارة من خبير.",
+      buttonText: "اتصل بنا"
+    },
+
+  }
+};
+
+// TypeScript fix: Type assertion for language key
+const t = translations[lang as keyof typeof translations] || translations.en;
+---
+
+<BaseLayout title={t.title} description={t.description} lang={lang}>
+  <!-- NAVBAR - no more passing RTL props, BaseLayout handles it -->
+  <Navbar links={t.navLinks} lang={lang} ctaText={t.callToAction.buttonText} />
+
+  <!-- HERO -->
+  <Hero
+    title={t.heroTitle}
+    subtitle={t.heroSubtitle}
+    text={t.heroText}
+    image="/images/hero-construction-sunset.jpg"
+    buttons={[
+      { text: t.heroButton, url: `/${lang}/services`, style: 'bg-primary-600 text-white hover:bg-primary-700' },
+      { text: t.learnMoreButton, url: `/${lang}/about`, style: 'border border-gray-300 text-gray-700 hover:text-primary-600' }
+    ]}
+  />
+
+  <!-- STATS -->
+  <Stats stats={[
+    { value: t.experienceYears, label: t.experienceText },
+    { value: t.projectsCompleted, label: t.projectsText }
+  ]} />
+
+  <!-- SERVICES -->
+  <ServicesSection
+    title={t.services.title}
+    subtitle={t.services.subtitle}
+    items={t.services.items}
+  />
+
+  <!-- PROJECTS -->
+  <ProjectsSection
+    title={t.projects.title}
+    viewAllText={t.projects.viewAll}
+    items={t.projects.items}
+    lang={lang}
+  />
+
+  <!-- WHY CHOOSE US -->
+  <WhyChooseUs
+    title={t.whyChooseUs.title}
+    items={t.whyChooseUs.items}
+  />
+
+  <!-- CALL TO ACTION -->
+  <CTASection
+    title={t.callToAction.title}
+    text={t.callToAction.text}
+    buttonText={t.callToAction.buttonText}
+    lang={lang}
+  />
+</BaseLayout>

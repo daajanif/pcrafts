@@ -1,0 +1,118 @@
+---
+// TinyLayout.astro - Minimal layout without footer
+import '../styles/global.css';
+
+// Define the props interface
+interface Props {
+  title: string;
+  description?: string;
+  lang?: string;
+  companyName?: string;
+  image?: string;
+  showFooter?: boolean;
+}
+
+// Using destructuring with default values
+const { 
+  title,
+  description = "Excellence in Construction - Building Tomorrow With Precision",
+  lang = 'en',
+  companyName = 'Precision Crafts',
+  image = '/images/og-image.jpg',
+  showFooter = false,
+} = Astro.props as Props;
+
+// Set the text direction based on language
+const isRTL = lang === 'ar';
+const dir = isRTL ? 'rtl' : 'ltr';
+
+// Canonical URL for SEO
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!DOCTYPE html>
+<html lang={lang} dir={dir}>
+<head>
+
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title} | {companyName}</title>
+    <meta name="description" content={description}>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+    
+<!-- Hotjar Tracking Code for p-crafts.com -->
+<script is:inline>
+    (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:6381105,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+  </script>
+
+
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title} | {companyName}</title>
+  <meta name="description" content={description}>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href={canonicalURL} />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Dubai:wght@300;400;500;700&display=swap" 
+    rel="stylesheet"
+  />
+  
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={`${title} | ${companyName}`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(image, Astro.site)} />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={`${title} | ${companyName}`} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(image, Astro.site)} />
+  
+  <!-- Slot for additional head content -->
+  <slot name="head" />
+</head>
+<body class={`font-sans antialiased text-gray-900 min-h-screen ${isRTL ? 'font-arabic' : ''}`}>
+  <!-- Main content with consistent width -->
+  <slot />
+  
+  <!-- Import Flowbite JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+  
+  <script>
+    Object.defineProperty(window, 'siteConfig', {
+      value: {
+        isRTL: document.documentElement.dir === 'rtl',
+        dir: document.documentElement.dir,
+        lang: document.documentElement.lang
+      },
+      writable: false
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+/* Arabic Font Declarations */
+@font-face {
+    font-family: 'TheYearofTheCamel';
+    src: url('/fonts/TheYearofTheCamel-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'TheYearofTheCamel';
+    src: url('/fonts/TheYearofTheCamel-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'TheYearofTheCamel';
+    src: url('/fonts/TheYearofTheCamel-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'TheYearofTheCamel';
+    src: url('/fonts/TheYearofTheCamel-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }

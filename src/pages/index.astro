@@ -7,6 +7,14 @@ import client from '../../tina/__generated__/client';
 import HomePage from "../../tina/pages/HomePage.tsx";
 const data = await client.queries.page({relativePath: "home.mdx"});
 
+// Redirect to the default language
+export const prerender = false;
+
+const url = new URL(Astro.request.url);
+if (url.pathname === '/') {
+  return Astro.redirect('/en/');
+}
+
 ---
 
 <!doctype html>

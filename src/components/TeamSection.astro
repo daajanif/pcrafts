@@ -1,0 +1,43 @@
+---
+interface TeamMember {
+  name: string;
+  position: string;
+  bio: string;
+  image: string;
+}
+const { title, subtitle, members } = Astro.props as {
+  title: string;
+  subtitle: string;
+  members: TeamMember[];
+};
+---
+
+<section class="py-20 bg-gray-50">
+  <div class="container mx-auto text-center mb-12 px-4">
+    <h2 class="text-4xl font-bold text-gray-900 mb-4">{title}</h2>
+    <p class="text-lg text-gray-500 lg:w-2/3 mx-auto">{subtitle}</p>
+  </div>
+  
+  <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4">
+    {members.map(member => (
+      <div class="flowbite-card">
+        <div class="bg-white border border-gray-200 rounded-lg shadow">
+          <div class="flex flex-col items-center py-10">
+            <img 
+              class="w-32 h-32 mb-3 rounded-full shadow-lg object-cover" 
+              src={member.image} 
+              alt={member.name}
+              loading="lazy"
+            />
+            <h3 class="mb-1 text-xl font-medium text-gray-900">{member.name}</h3>
+            <span class="text-sm text-primary-600 font-medium mb-3">{member.position}</span>
+            <p class="text-center text-gray-500 px-6">{member.bio}</p>
+            <div class="flex mt-4 space-x-3 md:mt-6">
+              <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300">Contact</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

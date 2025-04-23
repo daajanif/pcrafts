@@ -1,0 +1,35 @@
+---
+interface TimelineItem {
+  year: string;
+  title: string;
+  description: string;
+}
+const { title, subtitle, timeline } = Astro.props as {
+  title: string;
+  subtitle: string;
+  timeline: TimelineItem[];
+};
+---
+
+<section class="py-20 bg-gray-50">
+  <div class="container mx-auto text-center mb-16 px-4">
+    <h2 class="text-4xl font-bold text-gray-900 mb-4">{title}</h2>
+    <p class="text-lg text-gray-500 lg:w-2/3 mx-auto">{subtitle}</p>
+  </div>
+  
+  <div class="container mx-auto px-4">
+    <ol class="relative border-l border-gray-200 dark:border-gray-700 ml-3 md:ml-0">
+      {timeline.map((item) => (
+        <li class="mb-10 ml-6">
+          <span class="absolute flex items-center justify-center w-16 h-16 rounded-full -left-8 ring-8 ring-white bg-primary-600 text-white font-bold">
+            {item.year}
+          </span>
+          <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm ml-4 md:ml-8">
+            <h3 class="flex items-center mb-2 text-xl font-semibold text-gray-900">{item.title}</h3>
+            <p class="mb-2 text-base font-normal text-gray-500">{item.description}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

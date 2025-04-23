@@ -1,0 +1,44 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title:       string;
+  description: string;
+  lang:        string;
+  dir:         string;
+}
+
+// Pull only the declared props (no children here)
+const { title, description, lang, dir } = Astro.props as Props;
+---
+
+<!DOCTYPE html>
+<html lang={lang} dir={dir}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Favicon, fonts, OG tags… -->
+    <link rel="icon" href="/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON‑LD slot, per‑page extra <Head> data -->
+    <slot name="head" />
+  </head>
+
+  <body class="font-sans antialiased text-gray-900 bg-white">
+    <!-- Default slot = your page content -->
+    <slot />
+
+    <!-- Flowbite JS bundle for interactive components -->
+    <script type="module">
+      import 'flowbite';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+---
+import '../styles/global.css';
+
+// BaseLayout.astro
+interface Props {
+  title: string;
+  description: string;
+  lang: string;
+  dir: string;
+}
+
+const { title, description, lang, dir } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang} dir={dir}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS is loaded via Astro's integration -->
+  </head>
+  <body class="font-sans antialiased text-gray-900 bg-white">
+    <slot />
+    
+    <!-- Mobile Navigation Menu (hidden by default) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-gray-900/95 z-50 flex flex-col justify-center p-8 transform translate-x-full transition-transform duration-300">
+      <button id="close-menu" class="absolute top-8 right-8 text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      
+      <nav class="flex flex-col items-center space-y-6 text-xl text-white">
+        <!-- These links will be populated by JavaScript using the same links from the desktop nav -->
+      </nav>
+    </div>
+    
+    <script>
+      // Mobile menu functionality
+      const mobileMenuButton = document.querySelector('[aria-label="Menu"]');
+      const closeMenuButton = document.getElementById('close-menu');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      if (mobileMenu) {
+        const mobileNav = mobileMenu.querySelector('nav');
+        
+        // Clone desktop navigation links for mobile
+        const desktopNav = document.querySelector('nav.hidden.md\\:flex');
+        if (desktopNav && mobileNav) {
+          const desktopLinks = desktopNav.querySelectorAll('a');
+          desktopLinks.forEach(link => {
+            const newLink = link.cloneNode(true) as HTMLElement;
+            newLink.classList.add('text-xl', 'py-2');
+            mobileNav.appendChild(newLink);
+          });
+        }
+        
+        mobileMenuButton?.addEventListener('click', () => {
+          mobileMenu.classList.remove('translate-x-full');
+        });
+        
+        closeMenuButton?.addEventListener('click', () => {
+          mobileMenu.classList.add('translate-x-full');
+        });
+      }
+    </script>
+
+    <script type="module">
+        import 'flowbite';
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import CTASection from '../components/CTASection.astro';
+
+// Get the current URL to determine language
+const url = Astro.url;
+const pathSegments = url.pathname.split('/').filter(Boolean);
+const lang = pathSegments.length > 0 && ['en', 'ar'].includes(pathSegments[0]) ? pathSegments[0] : 'en';
+const isArabic = lang === 'ar';
+
+// Define translations
+const translations = {
+  en: {
+    title: "Page Not Found - Precision Crafts",
+    description: "The page you are looking for does not exist.",
+    navLinks: [
+      { name: "Home", url: `/${lang}/` },
+      { name: "Services", url: `/${lang}/services` },
+      { name: "Projects", url: `/${lang}/projects` },
+      { name: "About", url: `/${lang}/about` },
+      { name: "Contact", url: `/${lang}/contact` }
+    ],
+    errorTitle: "",
+    errorSubtitle: "Page Not Found",
+    errorText: "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+    buttonText: "Back to Homepage",
+    contactSection: {
+      title: "Need Help Finding Something?",
+      text: "If you can't find what you're looking for, our team is here to help.",
+      buttonText: "Contact Us"
+    },
+  },
+  ar: {
+    title: "الصفحة غير موجودة - بريسيجن كرافتس",
+    description: "الصفحة التي تبحث عنها غير موجودة.",
+    navLinks: [
+      { name: "الرئيسية", url: `/${lang}/` },
+      { name: "الخدمات", url: `/${lang}/services` },
+      { name: "المشاريع", url: `/${lang}/projects` },
+      { name: "من نحن", url: `/${lang}/about` },
+      { name: "اتصل بنا", url: `/${lang}/contact` }
+    ],
+    errorTitle: "",
+    errorSubtitle: "الصفحة غير موجودة",
+    errorText: "قد تكون الصفحة التي تبحث عنها قد تمت إزالتها، أو تم تغيير اسمها، أو غير متوفرة مؤقتًا.",
+    buttonText: "العودة إلى الصفحة الرئيسية",
+    contactSection: {
+      title: "هل تحتاج إلى مساعدة في العثور على شيء ما؟",
+      text: "إذا لم تتمكن من العثور على ما تبحث عنه، فإن فريقنا موجود هنا للمساعدة.",
+      buttonText: "اتصل بنا"
+    },
+
+  }
+};
+
+// TypeScript fix: Type assertion for language key
+const t = translations[lang as keyof typeof translations] || translations.en;
+---
+
+<BaseLayout title={t.title} description={t.description} lang={lang}>
+  <!-- NAVBAR -->
+  <Navbar links={t.navLinks} lang={lang} ctaText={t.contactSection.buttonText} />
+
+  <!-- 404 CONTENT -->
+  <section class="py-24 flex items-center min-h-[60vh]">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-9xl font-bold text-primary-600 mb-4">{t.errorTitle}</h1>
+      <h2 class="text-4xl font-bold mb-6">{t.errorSubtitle}</h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-12">{t.errorText}</p>
+      
+      <!-- Use SVG from public directory -->
+      <img 
+        src="/images/icons/alert.svg" 
+        alt="Error icon" 
+        width="128" 
+        height="128" 
+        class="mx-auto mb-12" 
+      />
+
+      
+      <!-- <a href={`/${lang}/`} class="inline-block bg-primary-600 text-white px-8 py-3 rounded-md font-bold hover:bg-primary-700 transition-colors">
+        {t.buttonText}
+      </a>
+    </div> -->
+  </section>
+
+  <!-- CALL TO ACTION -->
+  <CTASection
+    title={t.contactSection.title}
+    text={t.contactSection.text}
+    buttonText={t.contactSection.buttonText}
+    lang={lang}
+  />
+</BaseLayout>

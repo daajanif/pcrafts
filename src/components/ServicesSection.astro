@@ -1,0 +1,32 @@
+---
+interface Service { title: string; description: string; image: string; link: string }
+const { title, subtitle, items } = Astro.props as {
+  title: string
+  subtitle: string
+  items: Service[]
+}
+---
+<section class="py-20">
+  <div class="container mx-auto text-center mb-12 px-4">
+    <h2 class="text-3xl font-bold">{title}</h2>
+    <p class="text-gray-600 mt-2">{subtitle}</p>
+  </div>
+  <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4">
+    {items.map(s => (
+      <a href={s.link} class="flowbite-card">
+        <div class="overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition">
+          <img
+            src={s.image}
+            alt={s.title}
+            class="w-full h-48 object-cover"
+            loading="lazy"
+          />
+          <div class="p-6">
+            <h3 class="text-xl font-semibold">{s.title}</h3>
+            <p class="mt-2 text-gray-600">{s.description}</p>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>

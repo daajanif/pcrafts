@@ -3,7 +3,8 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "tinacms dev -c \"astro dev\"",
+    "dev": "tinacms server:start -c \"astro dev\"",
+    "astro-only": "astro dev",
     "build": "tinacms build && astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -15,13 +16,22 @@
     "@astrojs/sitemap": "^3.2.1",
     "@tanstack/react-virtual": "^3.13.4",
     "astro": "^5.5.2",
+    "astro-i18n": "^2.2.4",
+    "esbuild-linux-64": "^0.15.18",
+    "flowbite": "^3.1.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
-    "tinacms": "^2.7.3"
+    "styled-components": "^6.1.17",
+    "tinacms": "^2.7.5"
   },
   "devDependencies": {
-    "@tinacms/cli": "^1.9.3",
-    "@types/node": "^22.13.10"
+    "@astrojs/tailwind": "^6.0.2",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tinacms/cli": "^1.9.5",
+    "@types/node": "^22.13.10",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17"
   }
 }

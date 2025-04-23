@@ -1,0 +1,67 @@
+---
+interface Button { text: string; url: string; style: string }
+const { 
+  title, 
+  subtitle, 
+  text, 
+  buttons, 
+  image,
+  lang = 'en'
+} = Astro.props as {
+  title: string
+  subtitle: string
+  text: string
+  buttons: Button[]
+  image: string
+  lang?: string
+}
+
+// Determine if RTL based on language
+const isRTL = lang === 'ar';
+---
+
+<section class="relative bg-white overflow-hidden">
+  <div class={`container mx-auto flex flex-col-reverse lg:flex-row items-center py-20 px-4 ${isRTL ? 'lg:flex-row-reverse' : ''}`}>
+    <div class={`w-full lg:w-1/2 text-center ${isRTL ? 'lg:text-right' : 'lg:text-left'}`}>
+      {isRTL ? (
+        <>
+          <!-- Arabic content with explicit RTL styling -->
+          <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 font-arabic text-right" dir="rtl">{title}</h1>
+          <p class="mt-4 text-xl bg-primary-600 font-arabic text-right" dir="rtl">{subtitle}</p>
+          <p class="mt-6 text-gray-700 max-w-lg lg:mr-0 lg:ml-auto font-arabic text-right" dir="rtl">{text}</p>
+        </>
+      ) : (
+        <>
+          <!-- English content -->
+          <h1 class="text-4xl lg:text-6xl font-bold text-gray-900" dir="ltr">{title}</h1>
+          <p class="mt-4 text-xl text-primary-600" dir="ltr">{subtitle}</p>
+          <p class="mt-6 text-gray-700 max-w-lg lg:ml-0" dir="ltr">{text}</p>
+        </>
+      )}
+      
+      <div class={`mt-8 flex flex-wrap ${isRTL ? 'justify-center lg:justify-end' : 'justify-center lg:justify-start'} gap-4`}>
+        {buttons.map(b => (
+          <a
+            href={b.url}
+            class={`${b.style} px-6 py-3 rounded-md font-medium transition ${isRTL ? 'font-arabic' : ''}`}
+            dir={isRTL ? 'rtl' : 'ltr'}
+          >
+            {b.text}
+          </a>
+        ))}
+      </div>
+    </div>
+    <div class="w-full lg:w-1/2 mb-10 lg:mb-0">
+      <img
+        src={image}
+        alt="Construction at sunset"
+        class="w-full rounded-lg shadow-lg"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+
+</style>

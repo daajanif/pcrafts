@@ -1,0 +1,363 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Hero from '../../components/Hero.astro';
+import TeamSection from '../../components/TeamSection.astro';
+import HistorySection from '../../components/HistorySection.astro';
+import ValuesSection from '../../components/ValuesSection.astro';
+import TestimonialsSection from '../../components/TestimonialsSection.astro';
+import CTASection from '../../components/CTASection.astro';
+
+// Define valid language paths
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'ar' } }
+  ];
+}
+
+// Get the language parameter from URL
+const { lang = 'en' } = Astro.params;
+
+// Define translations - this block MUST come BEFORE any usage of translations
+const translations = {
+  en: {
+    title: "About Precision Crafts - Our Story",
+    description: "Learn about our journey, values, and the team behind Precision Crafts",
+    navLinks: [
+      { name: "Home", url: `/${lang}/` },
+      { name: "Services", url: `/${lang}/services` },
+      { name: "Projects", url: `/${lang}/projects` },
+      { name: "About", url: `/${lang}/about` },
+      { name: "Contact", url: `/${lang}/contact` }
+    ],
+    heroTitle: "About Precision Crafts",
+    heroSubtitle: "Our Journey of Excellence",
+    heroText: "Since 2010, we've been dedicated to delivering construction excellence with integrity, innovation, and uncompromising quality.",
+    history: {
+      title: "Our History",
+      subtitle: "The Journey So Far",
+      timeline: [
+        {
+          year: "2010",
+          title: "Foundation",
+          description: "Precision Crafts was founded with a vision to transform the construction industry through precision engineering and craftsmanship."
+        },
+        {
+          year: "2013",
+          title: "First Major Project",
+          description: "Completed our first major commercial project, establishing our reputation for quality and reliability."
+        },
+        {
+          year: "2016",
+          title: "Expansion",
+          description: "Expanded our services to include industrial construction and infrastructure development."
+        },
+        {
+          year: "2019",
+          title: "Innovation",
+          description: "Implemented cutting-edge technologies including BIM and sustainable construction methods."
+        },
+        {
+          year: "2022",
+          title: "Regional Recognition",
+          description: "Recognized as one of the top construction companies in the region with multiple industry awards."
+        },
+        {
+          year: "2025",
+          title: "Global Presence",
+          description: "Expanded operations internationally with projects across the Middle East and North Africa."
+        }
+      ]
+    },
+    values: {
+      title: "Our Core Values",
+      subtitle: "What Drives Us",
+      items: [
+        {
+          title: "Quality",
+          description: "We never compromise on quality, ensuring every project meets the highest standards of excellence.",
+          icon: "star"
+        },
+        {
+          title: "Integrity",
+          description: "We operate with transparency and honesty in all our dealings, building trust with our clients and partners.",
+          icon: "shield"
+        },
+        {
+          title: "Innovation",
+          description: "We embrace new technologies and methods to constantly improve our construction processes.",
+          icon: "lightbulb"
+        },
+        {
+          title: "Safety",
+          description: "We prioritize the safety of our team, clients, and the public in every project we undertake.",
+          icon: "safety"
+        },
+        {
+          title: "Sustainability",
+          description: "We are committed to environmentally responsible construction practices and sustainable solutions.",
+          icon: "leaf"
+        }
+      ]
+    },
+    team: {
+      title: "Our Leadership Team",
+      subtitle: "The People Behind Our Success",
+      members: [
+        {
+          name: "Ahmed Al-Farsi",
+          position: "Founder & CEO",
+          bio: "With over 25 years in construction, Ahmed brings vision and strategic leadership to every project.",
+          image: "/images/team/ceo.jpg"
+        },
+        {
+          name: "Sarah Johnson",
+          position: "Chief Operations Officer",
+          bio: "Sarah ensures operational excellence and timely delivery of all our construction projects.",
+          image: "/images/team/coo.jpg"
+        },
+        {
+          name: "Mohammed Rahman",
+          position: "Chief Engineer",
+          bio: "Mohammed leads our engineering team with innovation and technical expertise.",
+          image: "/images/team/engineer.jpg"
+        },
+        {
+          name: "Layla Mahmoud",
+          position: "Design Director",
+          bio: "Layla brings creativity and functionality together in our architectural designs.",
+          image: "/images/team/designer.jpg"
+        }
+      ]
+    },
+    testimonials: {
+      title: "What Our Clients Say",
+      items: [
+        {
+          quote: "Precision Crafts delivered our commercial tower not just on time, but with exceptional quality that exceeded our expectations.",
+          author: "Ibrahim Al-Mansour",
+          company: "Al Mansour Development"
+        },
+        {
+          quote: "The attention to detail and problem-solving ability of the Precision Crafts team made our complex industrial facility a success.",
+          author: "Fatima Al-Qasimi",
+          company: "Gulf Industries Corp"
+        },
+        {
+          quote: "Working with Precision Crafts meant peace of mind throughout our residential project. Their professionalism is unmatched.",
+          author: "Robert Chen",
+          company: "Azure Living Spaces"
+        }
+      ]
+    },
+    callToAction: {
+      title: "Ready to Work With Us?",
+      text: "Contact our team today to discuss your construction project needs and discover the Precision Crafts difference.",
+      buttonText: "Contact Us"
+    },
+    footer: {
+      address: "123 Construction Avenue, Dubai, UAE",
+      phone: "+971 4 123 4567",
+      email: "info@precisioncrafts.com",
+      copyright: "© 2025 Precision Crafts. All rights reserved."
+    }
+  },
+  ar: {
+    title: "عن بريسيجن كرافتس - قصتنا",
+    description: "تعرف على رحلتنا وقيمنا والفريق وراء بريسيجن كرافتس",
+    navLinks: [
+      { name: "الرئيسية", url: `/${lang}/` },
+      { name: "الخدمات", url: `/${lang}/services` },
+      { name: "المشاريع", url: `/${lang}/projects` },
+      { name: "من نحن", url: `/${lang}/about` },
+      { name: "اتصل بنا", url: `/${lang}/contact` }
+    ],
+    heroTitle: "عن بريسيجن كرافتس",
+    heroSubtitle: "رحلتنا نحو التميز",
+    heroText: "منذ عام 2010، كرسنا جهودنا لتقديم التميز في البناء مع النزاهة والابتكار والجودة التي لا تقبل المساومة.",
+    history: {
+      title: "تاريخنا",
+      subtitle: "رحلتنا حتى الآن",
+      timeline: [
+        {
+          year: "2010",
+          title: "التأسيس",
+          description: "تأسست بريسيجن كرافتس برؤية لتحويل صناعة البناء من خلال الهندسة الدقيقة والحرفية."
+        },
+        {
+          year: "2013",
+          title: "أول مشروع كبير",
+          description: "أكملنا أول مشروع تجاري كبير، مما رسخ سمعتنا في الجودة والموثوقية."
+        },
+        {
+          year: "2016",
+          title: "التوسع",
+          description: "قمنا بتوسيع خدماتنا لتشمل البناء الصناعي وتطوير البنية التحتية."
+        },
+        {
+          year: "2019",
+          title: "الابتكار",
+          description: "تطبيق تقنيات متطورة بما في ذلك نمذجة معلومات البناء وأساليب البناء المستدامة."
+        },
+        {
+          year: "2022",
+          title: "الاعتراف الإقليمي",
+          description: "تم الاعتراف بنا كواحدة من أفضل شركات البناء في المنطقة مع العديد من الجوائز الصناعية."
+        },
+        {
+          year: "2025",
+          title: "التواجد العالمي",
+          description: "توسعت العمليات دوليًا مع مشاريع في جميع أنحاء الشرق الأوسط وشمال أفريقيا."
+        }
+      ]
+    },
+    values: {
+      title: "قيمنا الأساسية",
+      subtitle: "ما الذي يدفعنا",
+      items: [
+        {
+          title: "الجودة",
+          description: "نحن لا نساوم أبدًا على الجودة، مما يضمن أن كل مشروع يلبي أعلى معايير التميز.",
+          icon: "star"
+        },
+        {
+          title: "النزاهة",
+          description: "نعمل بشفافية وصدق في جميع تعاملاتنا، مما يبني الثقة مع عملائنا وشركائنا.",
+          icon: "shield"
+        },
+        {
+          title: "الابتكار",
+          description: "نحن نتبنى تقنيات وأساليب جديدة لتحسين عمليات البناء لدينا باستمرار.",
+          icon: "lightbulb"
+        },
+        {
+          title: "السلامة",
+          description: "نحن نعطي الأولوية لسلامة فريقنا وعملائنا والجمهور في كل مشروع نقوم به.",
+          icon: "safety"
+        },
+        {
+          title: "الاستدامة",
+          description: "نحن ملتزمون بممارسات البناء المسؤولة بيئيًا والحلول المستدامة.",
+          icon: "leaf"
+        }
+      ]
+    },
+    team: {
+      title: "فريق القيادة لدينا",
+      subtitle: "الأشخاص وراء نجاحنا",
+      members: [
+        {
+          name: "أحمد الفارسي",
+          position: "المؤسس والرئيس التنفيذي",
+          bio: "مع أكثر من 25 عامًا في البناء، يجلب أحمد الرؤية والقيادة الاستراتيجية لكل مشروع.",
+          image: "/images/team/ceo.jpg"
+        },
+        {
+          name: "سارة جونسون",
+          position: "رئيسة العمليات",
+          bio: "تضمن سارة التميز التشغيلي والتسليم في الوقت المحدد لجميع مشاريع البناء لدينا.",
+          image: "/images/team/coo.jpg"
+        },
+        {
+          name: "محمد رحمن",
+          position: "كبير المهندسين",
+          bio: "يقود محمد فريق الهندسة لدينا بالابتكار والخبرة التقنية.",
+          image: "/images/team/engineer.jpg"
+        },
+        {
+          name: "ليلى محمود",
+          position: "مديرة التصميم",
+          bio: "تجمع ليلى بين الإبداع والوظائف في تصميماتنا المعمارية.",
+          image: "/images/team/designer.jpg"
+        }
+      ]
+    },
+    testimonials: {
+      title: "ما يقوله عملاؤنا",
+      items: [
+        {
+          quote: "قامت بريسيجن كرافتس بتسليم برجنا التجاري ليس فقط في الوقت المحدد، ولكن بجودة استثنائية تجاوزت توقعاتنا.",
+          author: "إبراهيم المنصور",
+          company: "المنصور للتطوير"
+        },
+        {
+          quote: "الاهتمام بالتفاصيل والقدرة على حل المشكلات لفريق بريسيجن كرافتس جعل منشأتنا الصناعية المعقدة ناجحة.",
+          author: "فاطمة القاسمي",
+          company: "شركة الخليج للصناعات"
+        },
+        {
+          quote: "العمل مع بريسيجن كرافتس يعني راحة البال طوال مشروعنا السكني. احترافيتهم لا مثيل لها.",
+          author: "روبرت تشن",
+          company: "مساحات أزور للمعيشة"
+        }
+      ]
+    },
+    callToAction: {
+      title: "هل أنت مستعد للعمل معنا؟",
+      text: "اتصل بفريقنا اليوم لمناقشة احتياجات مشروع البناء الخاص بك واكتشف الفرق مع بريسيجن كرافتس.",
+      buttonText: "اتصل بنا"
+    },
+    footer: {
+      address: "123 شارع البناء، دبي، الإمارات العربية المتحدة",
+      phone: "+971 4 123 4567",
+      email: "info@precisioncrafts.com",
+      copyright: "© 2025 بريسيجن كرافتس. جميع الحقوق محفوظة."
+    }
+  }
+};
+
+// TypeScript fix: Type assertion for language key
+const t = translations[lang as keyof typeof translations] || translations.en;
+---
+
+<BaseLayout title={t.title} description={t.description} lang={lang}>
+  <!-- NAVBAR -->
+  <Navbar links={t.navLinks} lang={lang} ctaText={t.callToAction.buttonText} />
+
+  <!-- HERO -->
+  <Hero
+    title={t.heroTitle}
+    subtitle={t.heroSubtitle}
+    text={t.heroText}
+    image="/images/about-hero.jpg"
+    buttons={[
+      { text: t.callToAction.buttonText, url: `/${lang}/contact`, style: 'bg-primary-600 text-white hover:bg-primary-700' },
+    ]}
+  />
+
+  <!-- HISTORY SECTION -->
+  <!-- <HistorySection
+    title={t.history.title}
+    subtitle={t.history.subtitle}
+    timeline={t.history.timeline}
+  /> -->
+
+  <!-- VALUES SECTION -->
+  <ValuesSection
+    title={t.values.title}
+    subtitle={t.values.subtitle}
+    items={t.values.items}
+  />
+
+  <!-- TEAM SECTION -->
+  <!-- <TeamSection
+    title={t.team.title}
+    subtitle={t.team.subtitle}
+    members={t.team.members}
+  /> -->
+
+  <!-- TESTIMONIALS SECTION -->
+  <!-- <TestimonialsSection
+    title={t.testimonials.title}
+    items={t.testimonials.items}
+  /> -->
+
+  <!-- CALL TO ACTION -->
+  <CTASection
+    title={t.callToAction.title}
+    text={t.callToAction.text}
+    buttonText={t.callToAction.buttonText}
+    lang={lang}
+  />
+</BaseLayout>

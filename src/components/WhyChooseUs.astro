@@ -1,0 +1,18 @@
+---
+interface Feature { title: string; description: string }
+const { title, items } = Astro.props as { title: string; items: Feature[] }
+---
+<section class="py-20">
+  <div class="container mx-auto text-center mb-12 px-4">
+    <h2 class="text-3xl font-bold">{title}</h2>
+  </div>
+  <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4">
+    {items.map((f, i) => (
+      <div class="p-6 border rounded-lg hover:bg-primary-50 transition">
+        <div class="text-primary-600 text-2xl font-bold mb-3">0{ i+1 }</div>
+        <h3 class="text-xl font-semibold">{f.title}</h3>
+        <p class="mt-2 text-gray-600">{f.description}</p>
+      </div>
+    ))}
+  </div>
+</section>
