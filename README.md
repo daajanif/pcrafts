@@ -1,93 +1,130 @@
-This is a [Tina CMS](https://tina.io/) starter project.
+# Precision Crafts - Construction Company Website
 
-# Astro + TinaCMS Starter Kit: Blog
+A multilingual (English/Arabic) website for Precision Crafts construction company built with Astro and TinaCMS.
 
-```sh
-npx create-tina-app@latest --template tina-astro-starter
+![Precision Crafts Screenshot](/public/images/screenshot.jpg)
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Astro](https://astro.build/) - Fast, modern static site generator
+- **CMS**: [TinaCMS](https://tina.io/) - Git-based headless CMS with visual editing
+- **CSS**: [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- **Internationalization**: Custom i18n implementation with multi-language support
+- **Deployment**: Vercel/Netlify/GitHub Pages (choose your platform)
+
+## 🚀 Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-And start editing with TinaCMS at `/admin`! 
+Access the admin panel at `/admin` to manage content through TinaCMS.
 
+## 📁 Project Structure
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![blog](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
-
-Features:
-
-- ✅ Markdown & MDX support + TinaCMS Markdown Component
-- ✅ TinaCMS Collections (Pages, Blogs, Config)
-- ✅ Visual Editing using Custom Loaders and Client Directives (requires React)
-- ✅ 100/100 Lighthouse performance
-- ✅ View transitions are enabled 
-- ✅ Minimal styling (make it your own!)
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-
-
-## 🚀 Project Structure
-
-Inside of your project, you'll see the following folders and files:
-
-```text
-├── README.md
-├── astro-tina-directive/
-├── astro.config.mjs
-├── package.json
-├── pnpm-lock.yaml
-├── public/
-├── src
-│   ├── components
-│   ├── content
-│   ├── content.config.ts
-│   ├── layouts
-│   ├── pages
-│   └── styles
-├── tina
-│   ├── collections
-│   ├── components
-│   ├── config.ts
-│   ├── pages
-│   └── tina-lock.json
-└── tsconfig.json
+```
+├── public/             # Static assets
+│   ├── images/         # Images and icons
+│   └── fonts/          # Web fonts
+├── src/
+│   ├── components/     # Reusable UI components
+│   ├── content/        # Content collections
+│   ├── i18n/           # Internationalization utilities
+│   ├── layouts/        # Page layouts
+│   └── pages/          # Page components and routes
+│       └── [lang]/     # Language-specific pages
+├── tina/               # TinaCMS configuration
+│   ├── collections/    # Content schemas
+│   └── components/     # TinaCMS custom components
+└── astro.config.mjs    # Astro configuration
 ```
 
-Each page is exposed as a route based on its file name which are generated from the content under `src/content/` (excluding the `config` folder). 
+## 🌐 Internationalization
 
-To enable Visual Editing with TinaCMS we have had to use React components and a new `client:tina` Directive. Which is the code located under `astro-tina-directive`. 
+The website supports English and Arabic languages. The language is determined by the URL path (`/en/` or `/ar/`). Each page has translations defined in the page component or pulled from TinaCMS.
 
-Under the `tina/` folder we have, `collections/` which holds our TinaCMS schema definitions. Under `components/` we have a custom Icon Component that is used within the TinaCMS UI. Under `pages/` we have the "wrappers" that make the Visual Editing work, using the `useTina` hook. 
+To add a new language:
+1. Add the language code to the `getStaticPaths()` function in each page
+2. Add translations for the new language in the translations object
+3. Create language-specific content in TinaCMS
 
-The `pages/index.astro` is the "Home" page - This is a special case and has been setup to look for the `content/page/home.mdx` file. 
+## 📋 Content Management
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Content is managed through TinaCMS, which provides a visual editing interface. To access the CMS:
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+1. Start the development server: `npm run dev`
+2. Navigate to `/admin` in your browser
+3. Make changes using the visual editor
+4. Changes are saved to the Git repository
 
-> [!NOTE]
-> To use `getCollection()` we need to add a schema in `content.config.ts` with a custom loader that uses the correct TinaCMS Collection.
+## 🚢 Deployment
+
+### Vercel Deployment
+
+1. Connect your repository to Vercel
+2. Set build command: `npm run build`
+3. Set output directory: `dist`
+4. Deploy
+
+### Netlify Deployment
+
+1. Connect your repository to Netlify
+2. Set build command: `npm run build`
+3. Set publish directory: `dist`
+4. Deploy
+
+### GitHub Pages Deployment
+
+Add this to your `package.json`:
+
+```json
+"scripts": {
+  "deploy": "npm run build && gh-pages -d dist"
+}
+```
+
+Then run:
+
+```bash
+npm install gh-pages --save-dev
+npm run deploy
+```
+
+## ⚙️ Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+```
+PUBLIC_SITE_URL=https://your-site-url.com
+TINA_CLIENT_ID=your-tina-client-id
+TINA_TOKEN=your-tina-token
+```
 
 
-Any static assets, like images, can be placed in the `public/` directory.
 
-## 🧞 Commands
+## 🐛 Troubleshooting
 
-All commands are run from the root of the project, from a terminal:
+### Common Issues:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+1. **TinaCMS Connection Issues**
+   - Check your Tina tokens and client ID
+   - Ensure your Tina config is properly set up
 
-## 👀 Want to learn more?
+2. **Build Errors**
+   - Make sure all dependencies are installed
+   - Check for missing content files referenced in pages
 
-Check out the [TinaCMS documentation](https://tina.io/docs) and the [Astro documentation](https://docs.astro.build) or jump into our [TinaCMS Discord server](https://discord.gg/cG2UNREu).
+3. **SVG Import Issues**
+   - SVGs in the `public` directory should be referenced with absolute paths
+   - For imported SVGs, use the Astro Image component
 
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
