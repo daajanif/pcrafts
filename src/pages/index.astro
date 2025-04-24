@@ -3,17 +3,17 @@ export const prerender = true;
 
 // Redirect bare root to /en/
 if (Astro.url.pathname === '/') {
-  return Astro.redirect('/en/');
+  return Astro.redirect('/ar/');
 }
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
   <head>
-    <meta http-equiv="refresh" content="0;url=/en/" />
+    <meta http-equiv="refresh" content="0;url=/ar/" />
     <title>Redirecting…</title>
   </head>
   <body>
-    <p><a href="/en/">/en/</a>…</p>
+    <p><a href="/ar/">/en/</a>…</p>
   </body>
 </html>
