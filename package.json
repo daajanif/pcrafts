@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "tinacms server:start -c \"astro dev\"",
     "astro-only": "astro dev",
-    "build": "tinacms build && astro build",
-    "preview": "astro preview",
+    "build": "astro build", 
     "astro": "astro"
   },
   "dependencies": {
@@ -17,7 +16,6 @@
     "@tanstack/react-virtual": "^3.13.4",
     "astro": "^5.5.2",
     "astro-i18n": "^2.2.4",
-    "esbuild-linux-64": "^0.15.18",
     "flowbite": "^3.1.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

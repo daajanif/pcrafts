@@ -1,30 +1,19 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import config from '../content/config/config.json';
-import client from '../../tina/__generated__/client';
-import HomePage from "../../tina/pages/HomePage.tsx";
-const data = await client.queries.page({relativePath: "home.mdx"});
+export const prerender = true;
 
-// Redirect to the default language
-export const prerender = false;
-
-const url = new URL(Astro.request.url);
-if (url.pathname === '/') {
+// Redirect bare root to /en/
+if (Astro.url.pathname === '/') {
   return Astro.redirect('/en/');
 }
-
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<BaseHead title={config.seo.title} description={config.seo.description} />
-	</head>
-	<body>
-		<Header />
-		<HomePage {...data} client:tina />
-		<Footer />
-	</body>
+  <head>
+    <meta http-equiv="refresh" content="0;url=/en/" />
+    <title>Redirecting…</title>
+  </head>
+  <body>
+    <p><a href="/en/">/en/</a>…</p>
+  </body>
 </html>

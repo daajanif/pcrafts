@@ -8,13 +8,13 @@ import tinaDirective from "./astro-tina-directive/register";
 import tailwind from '@astrojs/tailwind'; 
 
 export default defineConfig({
-  site: process.env.SITE_URL || `https://${process.env.VERCEL_URL}`,
+  site: 'https://p-crafts.com',
+  output: 'static',
   integrations: [
     tailwind(),
     mdx(), 
     sitemap(), 
-    react(), 
-    tinaDirective(),
+    react()
   ],
   // Use Astro's built-in i18n support
   i18n: {
