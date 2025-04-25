@@ -2,11 +2,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Hero from '../../components/Hero.astro';
-import Stats from '../../components/Stats.astro';
 import ServicesSection from '../../components/ServicesSection.astro';
 import ProjectsSection from '../../components/ProjectsSection.astro';
 import WhyChooseUs from '../../components/WhyChooseUs.astro';
 import CTASection from '../../components/CTASection.astro';
+import LogoSlider from '../../components/LogoSlider.astro';
 
 // Define valid language paths
 export function getStaticPaths() {
@@ -18,6 +18,20 @@ export function getStaticPaths() {
 
 // Get the language parameter from URL
 const { lang = 'en' } = Astro.params;
+
+const logos = [
+  { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png", alt: "Company 1" },
+  { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png", alt: "Company 2" },
+  { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png", alt: "Company 3" },
+  { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png", alt: "Company 4" },
+  { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png", alt: "Company 5" },
+  { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png", alt: "Company 6" },
+  { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png", alt: "Company 7" },
+  
+  { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png", alt: "Company 7" },
+
+
+]
 
 // Define translations - this block MUST come BEFORE any usage of translations
 const translations = {
@@ -36,10 +50,8 @@ const translations = {
     heroText: "We build structures that stand the test of time with cutting-edge technology, innovative methods, and unmatched craftsmanship.",
     heroButton: "Our Services",
     learnMoreButton: "Learn More",
-    experienceYears: "15+",
-    experienceText: "Years of Experience",
-    projectsCompleted: "200+",
-    projectsText: "Projects Completed",
+    experienceStat: "Years of Experience",
+    projectsStat: "Completed Projects",
     services: {
       title: "Our Services",
       subtitle: "What We Offer",
@@ -48,25 +60,25 @@ const translations = {
           title: "Residential Construction",
           description: "Luxury homes and residential complexes built with precision and care.",
           image: "/images/services/residential.jpg",
-          link: `/${lang}/services/residential`
+          link: `/${lang}/services`
         },
         {
           title: "Commercial Projects",
           description: "Office buildings, retail spaces, and commercial facilities designed for success.",
           image: "/images/services/commercial.jpg",
-          link: `/${lang}/services/commercial`
+          link: `/${lang}/services`
         },
         {
           title: "Industrial Facilities",
           description: "Manufacturing plants, warehouses, and industrial complexes built to specification.",
           image: "/images/services/industrial.jpg",
-          link: `/${lang}/services/industrial`
+          link: `/${lang}/services`
         },
         {
           title: "Infrastructure",
           description: "Roads, bridges, and public works projects that connect communities.",
           image: "/images/services/infrastructure.jpg",
-          link: `/${lang}/services/infrastructure`
+          link: `/${lang}/services`
         }
       ]
     },
@@ -115,17 +127,19 @@ const translations = {
         }
       ]
     },
+
+
+    
     callToAction: {
       title: "Ready to Start Your Project?",
       text: "Contact us today to discuss your construction needs and get a free consultation.",
       buttonText: "Contact Us"
     },
-    footer: {
-      address: "123 Construction Avenue, Dubai, UAE",
-      phone: "+971 4 123 4567",
-      email: "info@precisioncrafts.com",
-      copyright: "© 2025 Precision Crafts. All rights reserved."
+    clientLogos: {
+      title: "Trusted by Industry Leaders",
+      subtitle: "We partner with the best in the construction industry",
     }
+
   },
   ar: {
     title: "بريسيجن كرافتس - التميز في البناء",
@@ -139,13 +153,11 @@ const translations = {
     ],
     heroTitle:"بناء الغد بحرفية ودقة "  ,
     heroSubtitle: "التميز في البناء",
-    heroText: "نبني وفق أعلى معايير الجودة، مستخدمين أحدث التقنيات وأساليب مبتكرة."   ,
+    heroText: "نبني وفق أعلى معايير الجودة، مستخدمين أحدث التقنيات وأساليب مبتكرة"   ,
     heroButton: "خدماتنا",
     learnMoreButton: "اعرف المزيد",
-    experienceYears: "+15",
-    experienceText: "سنوات من الخبرة",
-    projectsCompleted: "+200",
-    projectsText: "مشروع مكتمل",
+    experienceStat: "سنة من الخبرة",
+    projectsStat: "مشروع مكتمل",
     services: {
       title: "خدماتنا",
       subtitle: "ما نقدمه هو مجموعة من الخدمات المتكاملة في كل ما يتعلق بالبناء",
@@ -154,25 +166,25 @@ const translations = {
           title: "البناء السكني",
           description: " منازل فاخرة ومجمعات سكنية مبنية بدقة واهتمام تلبي جميع الاحتياجات.",
           image: "/images/services/residential.jpg",
-          link: `/${lang}/services/residential`
+          link: `/${lang}/services`
         },
         {
           title: "المشاريع التجارية",
           description: "مباني المكاتب والمساحات التجارية والمرافق التجارية المصممة للنجاح.",
           image: "/images/services/commercial.jpg",
-          link: `/${lang}/services/commercial`
+          link: `/${lang}/services`
         },
         {
           title: "المنشآت الصناعية",
           description: "مصانع ومستودعات ومجمعات صناعية مبنية حسب المواصفات.",
           image: "/images/services/industrial.jpg",
-          link: `/${lang}/services/industrial`
+          link: `/${lang}/services`
         },
         {
           title: "البنية التحتية",
           description: "مشاريع الطرق والجسور والأشغال العامة التي تربط المجتمعات.",
           image: "/images/services/infrastructure.jpg",
-          link: `/${lang}/services/infrastructure`
+          link: `/${lang}/services`
         }
       ]
     },
@@ -227,6 +239,10 @@ const translations = {
       buttonText: "اتصل بنا"
     },
 
+    clientLogos: {
+      title: "موثوق به من قادة الصناعة",
+      subtitle: "نحن نتشارك مع أفضل الشركات في صناعة البناء",}
+
   }
 };
 
@@ -243,18 +259,19 @@ const t = translations[lang as keyof typeof translations] || translations.en;
     title={t.heroTitle}
     subtitle={t.heroSubtitle}
     text={t.heroText}
-    image="/images/hero-construction-sunset.jpg"
+    image="/images/hero3.jpg"
     buttons={[
       { text: t.heroButton, url: `/${lang}/services`, style: 'bg-primary-600 text-white hover:bg-primary-700' },
       { text: t.learnMoreButton, url: `/${lang}/about`, style: 'border border-gray-300 text-gray-700 hover:text-primary-600' }
     ]}
+    stats={[
+      { value: "+20", label: t.experienceStat },
+      { value: "+65", label: t.projectsStat },
+      
+
+    ]}
   />
 
-  <!-- STATS -->
-  <Stats stats={[
-    { value: t.experienceYears, label: t.experienceText },
-    { value: t.projectsCompleted, label: t.projectsText }
-  ]} />
 
   <!-- SERVICES -->
   <ServicesSection
@@ -277,6 +294,28 @@ const t = translations[lang as keyof typeof translations] || translations.en;
     items={t.whyChooseUs.items}
   />
 
+  <!-- CLIENT LOGOS -->
+  <!-- <LogoSlider
+  logos={[
+    { src: "/images/companies/aramco.svg", alt: "Company One" },
+    { src: "/images/companies/hadeed.svg", alt: "Company Two", url: "https://example.com" },
+    { src: "/images/services/infrastructure.png", alt: "Company Three" },
+    { src: "/images/logos/logo4.png", alt: "Company Four" },
+    { src: "/images/logos/logo5.png", alt: "Company Five" },
+    { src: "/images/logos/logo6.png", alt: "Company Six" },
+  ]}
+  variant="gray"
+  lang={lang} 
+  scrollSpeed="medium"
+/> -->
+
+<!-- <LogoSlider 
+  logos={logos}
+  variant="gray"
+  lang="en"
+/>
+ -->
+
   <!-- CALL TO ACTION -->
   <CTASection
     title={t.callToAction.title}
@@ -285,3 +324,4 @@ const t = translations[lang as keyof typeof translations] || translations.en;
     lang={lang}
   />
 </BaseLayout>
+

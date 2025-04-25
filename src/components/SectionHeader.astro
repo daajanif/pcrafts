@@ -1,0 +1,80 @@
+---
+// src/components/SectionHeader.astro
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  align?: 'left' | 'center' | 'right';
+  titleSize?: 'sm' | 'md' | 'lg';
+  subtitleSize?: 'sm' | 'md' | 'lg';
+  titleColor?: string;
+  subtitleColor?: string;
+  margin?: 'sm' | 'md' | 'lg';
+  lang?: string;
+}
+
+const {
+  title,
+  subtitle = '',
+  align = 'center',
+  titleSize = 'md',
+  subtitleSize = 'md',
+  titleColor = 'text-gray-900',
+  subtitleColor = 'text-gray-600',
+  margin = 'md',
+  lang = 'en'
+} = Astro.props as Props;
+
+const isRTL = lang === 'ar';
+
+// Title size classes
+const titleSizeClasses = {
+  sm: 'text-xl md:text-2xl',
+  md: 'text-2xl md:text-3xl',
+  lg: 'text-3xl md:text-4xl'
+};
+
+// Subtitle size classes
+const subtitleSizeClasses = {
+  sm: 'text-sm',
+  md: 'text-lg',
+  lg: 'text-xl'
+};
+
+// Alignment classes
+const alignClasses = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right'
+};
+
+// Margin bottom classes
+const marginClasses = {
+  sm: 'mb-6',
+  md: 'mb-12',
+  lg: 'mb-16'
+};
+
+// Override alignment for RTL if not manually specified
+const effectiveAlign = isRTL && align === 'left' ? 'right' : align;
+---
+
+<div class={`w-full ${marginClasses[margin]}`}>
+  <div class={`mx-auto ${align === 'center' ? 'max-w-3xl' : ''} ${alignClasses[effectiveAlign]}`}>
+    <h2 
+      class={`font-bold ${titleSizeClasses[titleSize]} ${titleColor} mb-4 ${isRTL ? 'font-arabic' : ''}`} 
+      dir={isRTL ? 'rtl' : 'ltr'}
+    >
+      {title}
+    </h2>
+    
+    {subtitle && (
+      <p 
+        class={`${subtitleSizeClasses[subtitleSize]} ${subtitleColor} ${isRTL ? 'font-arabic' : ''}`}
+        dir={isRTL ? 'rtl' : 'ltr'}
+      >
+        {subtitle}
+      </p>
+    )}
+  </div>
+</div>

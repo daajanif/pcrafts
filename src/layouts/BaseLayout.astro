@@ -240,12 +240,12 @@ const t = translations[lang as keyof typeof translations];
 
 <style>
   /* Force RTL styles with higher specificity */
-  :global([dir="rtl"] h1),
+  /* :global([dir="rtl"] h1),
   :global([dir="rtl"] p) {
     text-align: right !important;
     direction: rtl !important;
   }
-  
+   */
   /* Apply Arabic font directly to ensure it's used */
   :global(.font-arabic) {
     font-family: 'TheYearofTheCamel', 'Arial', sans-serif !important;

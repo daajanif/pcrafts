@@ -1,0 +1,88 @@
+---
+// src/components/MinimalHero.astro
+interface Button {
+  text: string
+  url: string
+  style: string
+}
+interface Props {
+  stat?: string                // small label above the heading
+  title: string                // full title
+  highlight?: string           // substring of title to render bold
+  text: string                 // body copy
+  buttons: Button[]            // two buttons (e.g. outline + filled)
+  bgColor?: string            // optional background color override
+  textAlign?: string          // optional text alignment override
+  lang?: string
+}
+const {
+  stat = '',
+  title,
+  highlight = '',
+  text,
+  buttons,
+  bgColor = 'bg-gray-50',     // Default to light gray from theme
+  textAlign = 'center',       // Default to center for page headers
+  lang = 'en'
+} = Astro.props as Props
+const isRTL = lang === 'ar'
+// helper: split title around highlight
+const [pre, , post] = highlight
+  ? title.split(highlight)
+  : [title, '', '']
+
+// Handle text alignment classes
+const getAlignmentClasses = () => {
+  // Start with RTL-aware alignment
+  const rtlAlign = isRTL ? 'text-right' : 'text-left';
+  
+  // Override with specified alignment if needed
+  if (textAlign === 'center') {
+    return 'text-center';
+  } else if (textAlign === 'right') {
+    return 'text-right';
+  } else if (textAlign === 'left') {
+    return 'text-left';
+  }
+  
+  return rtlAlign;
+};
+
+const alignClasses = getAlignmentClasses();
+const buttonJustify = textAlign === 'center' ? 'justify-center' : (isRTL ? 'justify-end' : 'justify-start');
+---
+<section class={`py-16 md:py-24 ${bgColor} border-b border-gray-200`}>
+  <div class="container mx-auto px-4">
+    <div class={`max-w-3xl mx-auto ${alignClasses}`}>
+      {stat && (
+        <p class={`text-sm font-semibold text-primary-600 uppercase mb-4 ${isRTL ? 'font-arabic' : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>
+          {stat}
+        </p>
+      )}
+      <h1
+        class={`text-4xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-6 ${isRTL ? 'font-arabic' : ''}`}
+        dir={isRTL ? 'rtl' : 'ltr'}
+      >
+        {pre}
+        {highlight && (
+          <span class="text-primary-600">{highlight}</span>
+        )}
+        {post}
+      </h1>
+      <p class={`text-xl text-gray-700 mb-8 ${isRTL ? 'font-arabic' : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>
+        {text}
+      </p>
+      <div class={`flex flex-wrap gap-4 ${buttonJustify}`}>
+        {buttons.map((b) => (
+          <a
+            href={b.url}
+            class={`${b.style} px-6 py-3 rounded-md font-medium transition ${isRTL ? 'font-arabic' : ''}`}
+            dir={isRTL ? 'rtl' : 'ltr'}
+          >
+            {b.text}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

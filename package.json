@@ -6,7 +6,8 @@
     "dev": "tinacms server:start -c \"astro dev\"",
     "astro-only": "astro dev",
     "build": "astro build", 
-    "astro": "astro"
+    "astro": "astro",
+    "preview": "astro preview"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.0",

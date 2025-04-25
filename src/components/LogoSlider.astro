@@ -1,0 +1,75 @@
+---
+// src/components/SimpleLogoGrid.astro
+
+interface Logo {
+  src: string    // Path to the logo image
+  alt: string    // Company name for alt text
+  url?: string   // Optional URL to link to client website
+}
+
+const {
+  logos = [],
+  variant = "default",
+  lang = "en"
+} = Astro.props as {
+  logos: Logo[]
+  variant?: "default" | "gray" | "dark" | "minimal"
+  lang?: string
+}
+
+const isRTL = lang === "ar"
+
+// Get variant-specific styling
+const getVariantStyles = () => {
+  switch (variant) {
+    case "gray":
+      return {
+        section: "bg-gray-50",
+        logoContainer: "bg-white shadow-sm"
+      };
+    case "dark":
+      return {
+        section: "bg-gray-900",
+        logoContainer: "bg-gray-800"
+      };
+    case "minimal":
+      return {
+        section: "bg-white",
+        logoContainer: "bg-transparent"
+      };
+    default:
+      return {
+        section: "bg-white",
+        logoContainer: "bg-gray-50"
+      };
+  }
+};
+
+const styles = getVariantStyles();
+---
+
+<section class={`py-12 ${styles.section}`}>
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" dir={isRTL ? 'rtl' : 'ltr'}>
+      {logos.map((logo) => (
+        <div class={`flex items-center justify-center p-6 rounded-lg h-24 ${styles.logoContainer} transition-all duration-300`}>
+          {logo.url ? (
+            <a href={logo.url} target="_blank" rel="noopener noreferrer" class="flex items-center justify-center h-full w-full">
+              <img 
+                src={logo.src} 
+                alt={logo.alt} 
+                class="max-h-12 max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300" 
+              />
+            </a>
+          ) : (
+            <img 
+              src={logo.src} 
+              alt={logo.alt} 
+              class="max-h-12 max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300" 
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

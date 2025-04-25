@@ -1,0 +1,86 @@
+---
+// src/components/ClientsLogos.astro
+
+interface Logo {
+  src: string    // Path to the logo image
+  alt: string    // Company name for alt text
+  url?: string   // Optional URL to link to client website
+}
+
+const {
+  logos = [],
+  variant = "default",
+  lang = "en"
+} = Astro.props as {
+  title: string
+  subtitle: string
+  logos: Logo[]
+  variant?: "default" | "gray" | "dark" | "minimal"
+  lang?: string
+}
+
+const isRTL = lang === "ar"
+
+// Get variant-specific styling
+const getVariantStyles = () => {
+  switch (variant) {
+    case "gray":
+      return {
+        section: "bg-gray-50",
+        title: "text-gray-900",
+        subtitle: "text-gray-600",
+        logoContainer: "bg-white"
+      };
+    case "dark":
+      return {
+        section: "bg-gray-900",
+        title: "text-white",
+        subtitle: "text-gray-300",
+        logoContainer: "bg-gray-800"
+      };
+    case "minimal":
+      return {
+        section: "bg-white",
+        title: "text-gray-900",
+        subtitle: "text-gray-600",
+        logoContainer: "bg-transparent"
+      };
+    default:
+      return {
+        section: "bg-white",
+        title: "text-gray-900",
+        subtitle: "text-gray-600",
+        logoContainer: "bg-gray-50"
+      };
+  }
+};
+
+const styles = getVariantStyles();
+---
+
+<section class={`py-8 ${styles.section}`}>
+
+    <!-- Logos grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 items-center justify-items-center">
+      {logos.map((logo) => (
+        <div class={`flex items-center justify-center p-6 rounded-lg h-24 w-full ${styles.logoContainer} transition-all duration-300 hover:shadow-md`}>
+          {logo.url ? (
+            <a href={logo.url} target="_blank" rel="noopener noreferrer" class="w-full h-full flex items-center justify-center">
+              <img 
+                src={logo.src} 
+                alt={logo.alt} 
+                class="max-h-12 max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300" 
+              />
+            </a>
+          ) : (
+            <img 
+              src={logo.src} 
+              alt={logo.alt} 
+              class="max-h-12 max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300" 
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,82 @@
+---
+interface ProcessStep {
+  number: string;
+  title: string;
+  description: string;
+}
+
+const { title, subtitle, steps, lang } = Astro.props as {
+  title: string;
+  subtitle: string;
+  steps: ProcessStep[];
+  lang: string;
+};
+
+// Determine if RTL based on language
+const isRTL = lang === 'ar';
+---
+
+<section class="py-20 bg-gray-50">
+  <div class="container mx-auto text-center mb-12 px-4">
+    <h2 class={`text-3xl font-bold text-gray-900 mb-4 ${isRTL ? 'font-arabic' : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>{title}</h2>
+    <p class={`text-lg text-gray-600 max-w-3xl mx-auto ${isRTL ? 'font-arabic' : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>{subtitle}</p>
+  </div>
+  
+  <div class="container mx-auto px-4">
+    {isRTL ? (
+      <!-- RTL Timeline (for Arabic) -->
+      <div class="relative">
+        <div class="hidden md:block absolute right-1/2 transform translate-x-1/2 h-full w-1 bg-primary-100"></div>
+        
+        <div class="space-y-12">
+          {steps.map((step, index) => (
+            <div class={`flex flex-col ${index % 2 !== 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center`}>
+              <div class={`md:w-1/2 mb-6 md:mb-0 flex flex-col items-center ${index % 2 !== 0 ? 'md:items-end' : 'md:items-start'} md:px-8`}>
+                <div class={`flex ${index % 2 !== 0 ? '' : 'flex-row-reverse'} items-center`}>
+                  <span class="text-4xl font-bold text-primary-600 font-arabic">{step.number}</span>
+                  <div class="w-12 h-1 bg-primary-600 mx-3"></div>
+                </div>
+                <h3 class={`text-2xl font-bold mt-2 ${index % 2 !== 0 ? 'text-left' : 'text-right'} font-arabic`} dir="rtl">{step.title}</h3>
+              </div>
+              
+              <div class="relative md:w-1/2 md:px-8">
+                <div class="hidden md:block absolute top-0 right-1/2 transform translate-x-1/2 -translate-y-1/3 w-6 h-6 rounded-full bg-primary-600 border-4 border-white"></div>
+                
+                <p class="bg-white p-6 rounded-lg shadow-md text-right font-arabic" dir="rtl">
+                  {step.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ) : (
+      <!-- LTR Timeline (for English) -->
+      <div class="relative">
+        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-primary-100"></div>
+        
+        <div class="space-y-12">
+          {steps.map((step, index) => (
+            <div class={`flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center`}>
+              <div class={`md:w-1/2 mb-6 md:mb-0 flex flex-col items-center ${index % 2 !== 0 ? 'md:items-start' : 'md:items-end'} md:px-8`}>
+                <div class={`flex ${index % 2 !== 0 ? 'flex-row-reverse' : ''} items-center`}>
+                  <span class="text-4xl font-bold text-primary-600">{step.number}</span>
+                  <div class="w-12 h-1 bg-primary-600 mx-3"></div>
+                </div>
+                <h3 class={`text-2xl font-bold mt-2 ${index % 2 !== 0 ? 'text-right' : 'text-left'}`}>{step.title}</h3>
+              </div>
+              
+              <div class="relative md:w-1/2 md:px-8">
+                <div class="hidden md:block absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/3 w-6 h-6 rounded-full bg-primary-600 border-4 border-white"></div>
+                
+                <p class="bg-white p-6 rounded-lg shadow-md">
+                  {step.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</section>

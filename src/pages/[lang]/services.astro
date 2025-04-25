@@ -1,8 +1,14 @@
 ---
+// src/pages/[lang]/services.astro
+
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Hero from '../../components/Hero.astro';
+import MinimalHero from '../../components/MinimalHero.astro';
 import CTASection from '../../components/CTASection.astro';
+import ServicesDetailSection from '../../components/ServicesDetailSection.astro';
+import ServiceFeaturesSection from '../../components/ServiceFeaturesSection.astro';
+import ServiceProcessSection from '../../components/ServiceProcessSection.astro';
 
 // Define valid language paths
 export function getStaticPaths() {
@@ -11,15 +17,11 @@ export function getStaticPaths() {
     { params: { lang: 'ar' } }
   ];
 }
-
-// Get the language parameter from URL
 const { lang = 'en' } = Astro.params;
-
-// Define translations
 const translations = {
   en: {
-    title: "Coming Soon - Precision Crafts",
-    description: "Our new website is coming soon. Stay tuned for updates!",
+    title: "Our Services - Precision Crafts",
+    description: "Explore our comprehensive construction and engineering services designed for excellence and precision.",
     navLinks: [
       { name: "Home", url: `/${lang}/` },
       { name: "Services", url: `/${lang}/services` },
@@ -27,115 +29,212 @@ const translations = {
       { name: "About", url: `/${lang}/about` },
       { name: "Contact", url: `/${lang}/contact` }
     ],
-    heroTitle: "Coming Soon",
-    heroSubtitle: "We're Building Something Great",
-    heroText: "Our new website is under construction. We're working hard to bring you the best experience. Stay tuned for updates!",
-    subscribeSection: {
-      title: "Get Notified When We Launch",
-      text: "Subscribe to our newsletter to be the first to know when our new website goes live.",
-      placeholderText: "Your email address",
-      buttonText: "Notify Me"
+    heroTitle: "Our Services",
+    heroSubtitle: "Comprehensive Construction Solutions",
+    heroText: "We offer a complete range of construction services with unmatched expertise, innovative approaches, and meticulous attention to detail.",
+    services: {
+      title: "What We Offer",
+      subtitle: "Comprehensive Construction Services",
+      featuresLabel: "Key Services:",
+      categories: [
+        {
+          title: "Residential Construction",
+          description: "Building exceptional homes that combine functionality, comfort, and aesthetic appeal. From luxury villas to residential complexes, we create living spaces that stand the test of time.",
+          image: "/images/services/residential.jpg",
+          features: [
+            "Custom Home Building",
+            "Luxury Villa Construction",
+            "Residential Complex Development",
+            "Home Extensions & Renovations",
+            "Interior Finishing"
+          ]
+        },
+        {
+          title: "Commercial Construction",
+          description: "Creating functional, impressive, and efficient commercial spaces that drive business success. Our commercial projects are designed to enhance productivity, visibility, and brand image.",
+          image: "/images/services/commercial.jpg",
+          features: [
+            "Office Buildings",
+            "Retail Spaces",
+            "Hotels & Hospitality",
+            "Mixed-Use Developments",
+            "Commercial Renovations"
+          ]
+        },
+        {
+          title: "Industrial Facilities",
+          description: "Constructing robust industrial facilities that optimize operational efficiency and meet the specific requirements of your industry, with a focus on functionality and durability.",
+          image: "/images/services/industrial.jpg",
+          features: [
+            "Manufacturing Plants",
+            "Warehouses & Logistics Facilities",
+            "Industrial Complexes",
+            "Processing Facilities",
+            "Technical Installations"
+          ]
+        },
+        {
+          title: "Infrastructure Projects",
+          description: "Developing vital infrastructure that connects communities and enhances urban environments. We build the foundations that support thriving communities and economies.",
+          image: "/images/services/infrastructure.jpg",
+          features: [
+            "Roads & Highways",
+            "Bridges & Overpasses",
+            "Public Works",
+            "Water & Utility Systems",
+            "Civil Engineering Projects"
+          ]
+        }
+      ]
     },
-    contactSection: {
-      title: "Need to get in touch?",
-      text: "If you need immediate assistance, please contact us directly.",
+    process: {
+      title: "Our Process",
+      subtitle: "How We Deliver Excellence",
+      steps: [
+        { number: "01", title: "Consultation & Planning", description: "We begin with thorough consultations to understand your vision, requirements, and objectives. Our experts analyze feasibility and develop comprehensive plans." },
+        { number: "02", title: "Design & Engineering",    description: "Our design team creates detailed plans and specifications while our engineers ensure structural integrity and regulatory compliance." },
+        { number: "03", title: "Construction",            description: "We execute the project with precision, adhering to timelines and quality standards. Our team utilizes advanced techniques and premium materials." },
+        { number: "04", title: "Quality Assurance",       description: "Throughout construction, we conduct rigorous quality checks to ensure every aspect meets our exacting standards and your expectations." },
+        { number: "05", title: "Completion & Handover",   description: "We finalize all details, conduct thorough inspections, and provide you with complete documentation before a smooth project handover." }
+      ]
+    },
+
+    callToAction: {
+      title: "Ready to Start Your Construction Project?",
+      text: "Contact our team today for a comprehensive consultation and discover how we can bring your vision to life with precision and excellence.",
       buttonText: "Contact Us"
-    },
-    footer: {
-      address: "123 Construction Avenue, Dubai, UAE",
-      phone: "+971 4 123 4567",
-      email: "info@precisioncrafts.com",
-      copyright: "© 2025 Precision Crafts. All rights reserved."
     }
   },
   ar: {
-    title: "قريبًا - بريسيجن كرافتس",
-    description: "موقعنا الجديد قريبًا. ترقبوا التحديثات!",
+    title: "خدماتنا - بريسيجن كرافتس",
+    description: "استكشف خدماتنا الشاملة في البناء والهندسة المصممة للتميز والدقة.",
     navLinks: [
       { name: "الرئيسية", url: `/${lang}/` },
-      { name: "الخدمات", url: `/${lang}/services` },
-      { name: "المشاريع", url: `/${lang}/projects` },
-      { name: "من نحن", url: `/${lang}/about` },
+      { name: "الخدمات",  url: `/${lang}/services` },
+      { name: "المشاريع",   url: `/${lang}/projects` },
+      { name: "من نحن",    url: `/${lang}/about` },
       { name: "اتصل بنا", url: `/${lang}/contact` }
     ],
-    heroTitle: "قريبًا",
-    heroSubtitle: "نحن نبني شيئًا رائعًا",
-    heroText: "موقعنا الجديد قيد الإنشاء. نحن نعمل بجد لنقدم لكم أفضل تجربة. ترقبوا التحديثات!",
-    subscribeSection: {
-      title: "احصل على إشعار عند الإطلاق",
-      text: "اشترك في نشرتنا الإخبارية لتكون أول من يعرف عندما يتم إطلاق موقعنا الجديد.",
-      placeholderText: "عنوان بريدك الإلكتروني",
-      buttonText: "أخطرني"
+    heroTitle: "خدماتنا",
+    heroSubtitle: "حلول بناء شاملة",
+    heroText: "نقدم مجموعة كاملة من خدمات البناء بخبرة لا مثيل لها، ونهج مبتكر، واهتمام دقيق بالتفاصيل",
+    services: {
+      featuresLabel: "الخدمات الرئيسية:",
+      categories: [
+        {
+          title: "البناء السكني",
+          description: "بناء منازل استثنائية تجمع بين الوظائف والراحة والجاذبية الجمالية. من الفلل الفاخرة إلى المجمعات السكنية، نحن نخلق مساحات معيشة تصمد أمام اختبار الزمن.",
+          image: "/images/services/residential.jpg",
+          features: [
+            "بناء المنازل المخصصة",
+            "بناء الفلل الفاخرة",
+            "تطوير المجمعات السكنية",
+            "توسيعات وتجديدات المنازل",
+            "التشطيبات الداخلية"
+          ]
+        },
+        {
+          title: "البناء التجاري",
+          description: "إنشاء مساحات تجارية عملية ومثيرة للإعجاب وفعالة تدفع نجاح الأعمال. تم تصميم مشاريعنا التجارية لتعزيز الإنتاجية والرؤية وصورة العلامة التجارية.",
+          image: "/images/services/commercial.jpg",
+          features: [
+            "مباني المكاتب",
+            "المساحات التجارية",
+            "الفنادق والضيافة",
+            "التطويرات متعددة الاستخدامات",
+            "التجديدات التجارية"
+          ]
+        },
+        {
+          title: "المنشآت الصناعية",
+          description: "بناء منشآت صناعية قوية تُحسّن الكفاءة التشغيلية وتلبي المتطلبات الخاصة لصناعتك، مع التركيز على الوظائف والمتانة.",
+          image: "/images/services/industrial.jpg",
+          features: [
+            "مصانع التصنيع",
+            "المستودعات ومرافق الخدمات اللوجستية",
+            "المجمعات الصناعية",
+            "مرافق المعالجة",
+            "التركيبات التقنية"
+          ]
+        },
+        {
+          title: "مشاريع البنية التحتية",
+          description: "تطوير البنية التحتية الحيوية التي تربط المجتمعات وتعزز البيئات الحضرية. نحن نبني الأساسات التي تدعم المجتمعات والاقتصادات المزدهرة.",
+          image: "/images/services/infrastructure.jpg",
+          features: [
+            "الطرق والطرق السريعة",
+            "الجسور والعبارات",
+            "الأشغال العامة",
+            "أنظمة المياه والمرافق",
+            "مشاريع الهندسة المدنية"
+          ]
+        }
+      ]
     },
-    contactSection: {
-      title: "هل تحتاج إلى التواصل معنا؟",
-      text: "إذا كنت بحاجة إلى مساعدة فورية، يرجى الاتصال بنا مباشرة.",
+    process: {
+      title: "عمليتنا",
+      subtitle: "كيف نحقق التميز",
+      steps: [
+        { number: "١", title: "الاستشارة والتخطيط",  description: "نبدأ بمشاورات شاملة لفهم رؤيتك ومتطلباتك وأهدافك. يحلل خبراؤنا الجدوى ويطورون خططًا شاملة." },
+        { number: "٢", title: "التصميم والهندسة",  description: "يقوم فريق التصميم لدينا بإنشاء خطط ومواصفات مفصلة بينما يضمن مهندسونا السلامة الهيكلية والامتثال التنظيمي." },
+        { number: "٣", title: "البناء",          description: "ننفذ المشروع بدقة، مع الالتزام بالجداول الزمنية ومعايير الجودة. يستخدم فريقنا تقنيات متقدمة ومواد ممتازة." },
+        { number: "٤", title: "ضمان الجودة",     description: "طوال عملية البناء، نجري فحوصات جودة صارمة للتأكد من أن كل جانب يلبي معاييرنا الدقيقة وتوقعاتك." },
+        { number: "٥", title: "الإكمال والتسليم", description: "نحن ننهي جميع التفاصيل، ونجري عمليات تفتيش شاملة، ونزودك بوثائق كاملة قبل تسليم المشروع بسلاسة." }
+      ]
+    },
+
+    callToAction: {
+      title: "هل أنت جاهز لبدء مشروع البناء الخاص بك؟",
+      text: "اتصل بفريقنا اليوم للحصول على استشارة شاملة واكتشف كيف يمكننا تحويل رؤيتك إلى واقع بدقة وتميز.",
       buttonText: "اتصل بنا"
-    },
-    footer: {
-      address: "123 شارع البناء، دبي، الإمارات العربية المتحدة",
-      phone: "+971 4 123 4567",
-      email: "info@precisioncrafts.com",
-      copyright: "© 2025 بريسيجن كرافتس. جميع الحقوق محفوظة."
     }
   }
 };
 
-// TypeScript fix: Type assertion for language key
 const t = translations[lang as keyof typeof translations] || translations.en;
-const isArabic = lang === 'ar';
 ---
 
 <BaseLayout title={t.title} description={t.description} lang={lang}>
   <!-- NAVBAR -->
-  <Navbar links={t.navLinks} lang={lang} ctaText={t.contactSection.buttonText} />
-
-  <!-- HERO -->
-  <Hero
-    title={t.heroTitle}
-    subtitle={t.heroSubtitle}
-    text={t.heroText}
-    image="/images/coming-soon-hero.jpg"
-    buttons={[
-      { text: t.contactSection.buttonText, url: `/${lang}/contact`, style: 'bg-primary-600 text-white hover:bg-primary-700' },
-    ]}
+  <Navbar
+    links={t.navLinks}
+    lang={lang}
+    ctaText={t.callToAction.buttonText}
   />
 
-  <!-- SUBSCRIBE SECTION -->
-  <section class="py-16 bg-gray-50">
-    <div class="container mx-auto px-4">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-4">{t.subscribeSection.title}</h2>
-        <p class="text-lg text-gray-600 mb-8">{t.subscribeSection.text}</p>
-        
-        <!-- Progress bar -->
-        <div class="w-full bg-gray-200 rounded-full h-2 mb-12">
-          <div class="bg-primary-600 h-2 rounded-full w-3/4"></div>
-        </div>
-        
-        <!-- Subscribe form -->
-        <form class="flex flex-col sm:flex-row gap-3 justify-center">
-          <input 
-            type="email" 
-            placeholder={t.subscribeSection.placeholderText} 
-            class={`px-4 py-2 flex-grow border border-gray-300 rounded ${isArabic ? "text-right" : "text-left"}`}
-            required
-          />
-          <button 
-            type="submit" 
-            class="bg-primary-600 text-white px-6 py-2 rounded font-bold hover:bg-primary-700 transition-colors">
-            {t.subscribeSection.buttonText}
-          </button>
-        </form>
-      </div>
-    </div>
-  </section>
+  <!-- HERO -->
+  <MinimalHero
+  stat={t.heroSubtitle}
+  title={t.heroTitle}
+  highlight=""
+  text={t.heroText}
+  buttons={[]}
+  lang={lang}
+/>
+
+
+
+  <!-- SERVICES DETAIL SECTION -->
+  <ServicesDetailSection
+    categories={t.services.categories}
+    featuresLabel={t.services.featuresLabel}
+    lang={lang}
+  />
+
+  <!-- SERVICE PROCESS SECTION -->
+  <ServiceProcessSection
+    title={t.process.title}
+    subtitle={t.process.subtitle}
+    steps={t.process.steps}
+    lang={lang}
+  />
+
 
   <!-- CALL TO ACTION -->
   <CTASection
-    title={t.contactSection.title}
-    text={t.contactSection.text}
-    buttonText={t.contactSection.buttonText}
+    title={t.callToAction.title}
+    text={t.callToAction.text}
+    buttonText={t.callToAction.buttonText}
     lang={lang}
   />
 </BaseLayout>
