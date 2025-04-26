@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Navbar from '../../components/Navbar.astro';
 import Hero from '../../components/Hero.astro';
 import ServicesSection from '../../components/ServicesSection.astro';
 import ProjectsSection from '../../components/ProjectsSection.astro';
@@ -27,10 +26,7 @@ const logos = [
   { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png", alt: "Company 5" },
   { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png", alt: "Company 6" },
   { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png", alt: "Company 7" },
-  
-  { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png", alt: "Company 7" },
-
-
+  { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png", alt: "Company 7" }
 ]
 
 // Define translations - this block MUST come BEFORE any usage of translations
@@ -127,9 +123,6 @@ const translations = {
         }
       ]
     },
-
-
-    
     callToAction: {
       title: "Ready to Start Your Project?",
       text: "Contact us today to discuss your construction needs and get a free consultation.",
@@ -139,7 +132,6 @@ const translations = {
       title: "Trusted by Industry Leaders",
       subtitle: "We partner with the best in the construction industry",
     }
-
   },
   ar: {
     title: "بريسيجن كرافتس - التميز في البناء",
@@ -238,11 +230,10 @@ const translations = {
       text: "اتصل بنا اليوم لمناقشة احتياجات البناء الخاصة بك والحصول على استشارة من خبير.",
       buttonText: "اتصل بنا"
     },
-
     clientLogos: {
       title: "موثوق به من قادة الصناعة",
-      subtitle: "نحن نتشارك مع أفضل الشركات في صناعة البناء",}
-
+      subtitle: "نحن نتشارك مع أفضل الشركات في صناعة البناء",
+    }
   }
 };
 
@@ -250,10 +241,13 @@ const translations = {
 const t = translations[lang as keyof typeof translations] || translations.en;
 ---
 
-<BaseLayout title={t.title} description={t.description} lang={lang}>
-  <!-- NAVBAR - no more passing RTL props, BaseLayout handles it -->
-  <Navbar links={t.navLinks} lang={lang} ctaText={t.callToAction.buttonText} />
-
+<BaseLayout 
+  title={t.title} 
+  description={t.description} 
+  lang={lang}
+  navLinks={t.navLinks}
+  ctaText={t.callToAction.buttonText}
+>
   <!-- HERO -->
   <Hero
     title={t.heroTitle}
@@ -267,11 +261,8 @@ const t = translations[lang as keyof typeof translations] || translations.en;
     stats={[
       { value: "+20", label: t.experienceStat },
       { value: "+65", label: t.projectsStat },
-      
-
     ]}
   />
-
 
   <!-- SERVICES -->
   <ServicesSection
@@ -296,25 +287,10 @@ const t = translations[lang as keyof typeof translations] || translations.en;
 
   <!-- CLIENT LOGOS -->
   <!-- <LogoSlider
-  logos={[
-    { src: "/images/companies/aramco.svg", alt: "Company One" },
-    { src: "/images/companies/hadeed.svg", alt: "Company Two", url: "https://example.com" },
-    { src: "/images/services/infrastructure.png", alt: "Company Three" },
-    { src: "/images/logos/logo4.png", alt: "Company Four" },
-    { src: "/images/logos/logo5.png", alt: "Company Five" },
-    { src: "/images/logos/logo6.png", alt: "Company Six" },
-  ]}
-  variant="gray"
-  lang={lang} 
-  scrollSpeed="medium"
-/> -->
-
-<!-- <LogoSlider 
-  logos={logos}
-  variant="gray"
-  lang="en"
-/>
- -->
+    logos={logos}
+    variant="gray"
+    lang={lang}
+  /> -->
 
   <!-- CALL TO ACTION -->
   <CTASection
@@ -324,4 +300,3 @@ const t = translations[lang as keyof typeof translations] || translations.en;
     lang={lang}
   />
 </BaseLayout>
-

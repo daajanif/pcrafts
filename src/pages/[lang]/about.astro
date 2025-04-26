@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Navbar from '../../components/Navbar.astro';
-import Hero from '../../components/Hero.astro';
+import MinimalHero from '../../components/MinimalHero.astro';
 import TeamSection from '../../components/TeamSection.astro';
 import HistorySection from '../../components/HistorySection.astro';
 import ValuesSection from '../../components/ValuesSection.astro';
@@ -53,21 +52,7 @@ const translations = {
           title: "Expansion",
           description: "Expanded our services to include industrial construction and infrastructure development."
         },
-        {
-          year: "2019",
-          title: "Innovation",
-          description: "Implemented cutting-edge technologies including BIM and sustainable construction methods."
-        },
-        {
-          year: "2022",
-          title: "Regional Recognition",
-          description: "Recognized as one of the top construction companies in the region with multiple industry awards."
-        },
-        {
-          year: "2025",
-          title: "Global Presence",
-          description: "Expanded operations internationally with projects across the Middle East and North Africa."
-        }
+
       ]
     },
     values: {
@@ -151,6 +136,20 @@ const translations = {
         }
       ]
     },
+    partners: {
+      title: "Our Trusted Partners",
+      subtitle: "Building Excellence Together"
+    },
+    stats: {
+      title: "Our Impact",
+      subtitle: "By the Numbers",
+      items: [
+        { value: "15+", label: "Years of Excellence" },
+        { value: "200+", label: "Projects Completed" },
+        { value: "95%", label: "Client Satisfaction" },
+        { value: "300+", label: "Team Members" }
+      ]
+    },
     callToAction: {
       title: "Ready to Work With Us?",
       text: "Contact our team today to discuss your construction project needs and discover the Precision Crafts difference.",
@@ -195,21 +194,7 @@ const translations = {
           title: "التوسع",
           description: "قمنا بتوسيع خدماتنا لتشمل البناء الصناعي وتطوير البنية التحتية."
         },
-        {
-          year: "2019",
-          title: "الابتكار",
-          description: "تطبيق تقنيات متطورة بما في ذلك نمذجة معلومات البناء وأساليب البناء المستدامة."
-        },
-        {
-          year: "2022",
-          title: "الاعتراف الإقليمي",
-          description: "تم الاعتراف بنا كواحدة من أفضل شركات البناء في المنطقة مع العديد من الجوائز الصناعية."
-        },
-        {
-          year: "2025",
-          title: "التواجد العالمي",
-          description: "توسعت العمليات دوليًا مع مشاريع في جميع أنحاء الشرق الأوسط وشمال أفريقيا."
-        }
+
       ]
     },
     values: {
@@ -226,11 +211,7 @@ const translations = {
           description: "نعمل بشفافية وصدق في جميع تعاملاتنا، مما يبني الثقة مع عملائنا وشركائنا.",
           icon: "shield"
         },
-        {
-          title: "الابتكار",
-          description: "نحن نتبنى تقنيات وأساليب جديدة لتحسين عمليات البناء لدينا باستمرار.",
-          icon: "lightbulb"
-        },
+
         {
           title: "السلامة",
           description: "نحن نعطي الأولوية لسلامة فريقنا وعملائنا والجمهور في كل مشروع نقوم به.",
@@ -293,51 +274,68 @@ const translations = {
         }
       ]
     },
+    partners: {
+      title: "شركاؤنا الموثوقون",
+      subtitle: "نبني التميز معًا"
+    },
     callToAction: {
       title: "هل أنت مستعد للعمل معنا؟",
       text: "اتصل بفريقنا اليوم لمناقشة احتياجات مشروع البناء الخاص بك واكتشف الفرق مع بريسيجن كرافتس.",
       buttonText: "اتصل بنا"
     },
-    footer: {
-      address: "123 شارع البناء، دبي، الإمارات العربية المتحدة",
-      phone: "+971 4 123 4567",
-      email: "info@precisioncrafts.com",
-      copyright: "© 2025 بريسيجن كرافتس. جميع الحقوق محفوظة."
-    }
   }
 };
 
 // TypeScript fix: Type assertion for language key
 const t = translations[lang as keyof typeof translations] || translations.en;
+
+// Partner logos
+const partnerLogos = [
+  { src: "/images/partners/partner1.png", alt: "Partner 1" },
+  { src: "/images/partners/partner2.png", alt: "Partner 2" },
+  { src: "/images/partners/partner3.png", alt: "Partner 3" },
+  { src: "/images/partners/partner4.png", alt: "Partner 4" },
+  { src: "/images/partners/partner5.png", alt: "Partner 5" },
+  { src: "/images/partners/partner6.png", alt: "Partner 6" }
+];
 ---
 
-<BaseLayout title={t.title} description={t.description} lang={lang}>
-  <!-- NAVBAR -->
-  <Navbar links={t.navLinks} lang={lang} ctaText={t.callToAction.buttonText} />
-
-  <!-- HERO -->
-  <Hero
+<BaseLayout 
+  title={t.title} 
+  description={t.description} 
+  lang={lang}
+  navLinks={t.navLinks}
+  ctaText={t.callToAction.buttonText}
+>
+  <!-- HERO SECTION - Using MinimalHero -->
+  <MinimalHero
     title={t.heroTitle}
-    subtitle={t.heroSubtitle}
+    highlight=""
     text={t.heroText}
-    image="/images/about-hero.jpg"
+    stat={t.heroSubtitle}
     buttons={[
       { text: t.callToAction.buttonText, url: `/${lang}/contact`, style: 'bg-primary-600 text-white hover:bg-primary-700' },
     ]}
+    bgColor="bg-gray-50"
+    textAlign="center"
+    lang={lang}
   />
 
+
   <!-- HISTORY SECTION -->
-  <!-- <HistorySection
+  <HistorySection
     title={t.history.title}
     subtitle={t.history.subtitle}
     timeline={t.history.timeline}
-  /> -->
+    lang={lang}
+  />
 
   <!-- VALUES SECTION -->
   <ValuesSection
     title={t.values.title}
     subtitle={t.values.subtitle}
     items={t.values.items}
+    lang={lang}
   />
 
   <!-- TEAM SECTION -->
@@ -345,13 +343,38 @@ const t = translations[lang as keyof typeof translations] || translations.en;
     title={t.team.title}
     subtitle={t.team.subtitle}
     members={t.team.members}
+    lang={lang}
   /> -->
 
   <!-- TESTIMONIALS SECTION -->
   <!-- <TestimonialsSection
     title={t.testimonials.title}
     items={t.testimonials.items}
+    lang={lang}
   /> -->
+
+  <!-- PARTNERS SECTION -->
+  <!-- <div class={`py-16 bg-gray-50 ${lang === 'ar' ? 'dir-rtl' : ''}`}>
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class={`text-3xl font-bold mb-3 ${lang === 'ar' ? 'font-arabic' : 'font-heading'}`}>{t.partners.title}</h2>
+        <p class={`text-lg text-gray-600 ${lang === 'ar' ? 'font-arabic' : ''}`}>{t.partners.subtitle}</p>
+      </div> -->
+      
+      <!-- Logo grid without requiring the SimpleLogoGrid component -->
+      <!-- <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        {partnerLogos.map((logo) => (
+          <div class="flex items-center justify-center p-6 rounded-lg bg-white shadow-sm h-24">
+            <img 
+              src={logo.src} 
+              alt={logo.alt} 
+              class="max-h-12 max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300" 
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div> -->
 
   <!-- CALL TO ACTION -->
   <CTASection

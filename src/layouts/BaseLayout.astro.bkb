@@ -1,8 +1,7 @@
 ---
-// BaseLayout.astro - Simplified with RTL support and global Navbar
+// BaseLayout.astro - Simplified with RTL support
 import '../styles/global.css';
 import "../styles/fonts.css";
-import Navbar from '../components/Navbar.astro';
 
 // Define the props interface
 interface Props {
@@ -11,8 +10,12 @@ interface Props {
   lang?: string;
   companyName?: string;
   image?: string;
-  navLinks?: Array<{ name: string; url: string }>;
-  ctaText?: string;
+}
+
+// Common navigation structure
+interface NavLink {
+  name: string;
+  url: string;
 }
 
 // Using destructuring with default values
@@ -22,8 +25,6 @@ const {
   lang = 'en',
   companyName = 'Precision Crafts',
   image = '/images/og-image.jpg',
-  navLinks,
-  ctaText
 } = Astro.props as Props;
 
 // Set the text direction based on language
@@ -36,20 +37,14 @@ const currentYear = new Date().getFullYear();
 // Canonical URL for SEO
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-// Default navigation links if not provided in props
-const defaultNavLinks = [
+// Navigation links
+const navLinks: NavLink[] = [
   { name: lang === 'ar' ? 'الرئيسية' : 'Home', url: `/${lang}/` },
   { name: lang === 'ar' ? 'الخدمات' : 'Services', url: `/${lang}/services` },
   { name: lang === 'ar' ? 'المشاريع' : 'Projects', url: `/${lang}/projects` },
   { name: lang === 'ar' ? 'من نحن' : 'About', url: `/${lang}/about` },
   { name: lang === 'ar' ? 'اتصل بنا' : 'Contact', url: `/${lang}/contact` }
 ];
-
-// Use provided navLinks or fallback to default
-const links = navLinks || defaultNavLinks;
-
-// Default CTA text if not provided
-const defaultCtaText = lang === 'ar' ? 'اتصل بنا' : 'Contact Us';
 
 // Footer translations
 const translations = {
@@ -130,9 +125,6 @@ const t = translations[lang as keyof typeof translations];
   <slot name="head" />
 </head>
 <body class={`font-sans antialiased text-gray-900 bg-white min-h-screen ${isRTL ? 'font-arabic' : ''}`}>
-  <!-- Global Navigation -->
-  <Navbar links={links} lang={lang} ctaText={ctaText || defaultCtaText} />
-  
   <!-- Main content with consistent width -->
   <slot />
   
@@ -188,7 +180,7 @@ const t = translations[lang as keyof typeof translations];
         <div class="w-full md:w-1/4 mb-8 md:mb-0">
           <h3 class="text-xl font-bold mb-4">{t.quickLinks}</h3>
           <ul class="space-y-2">
-            {links.map((link) => (
+            {navLinks.map((link) => (
               <li>
                 <a 
                   href={link.url}
@@ -247,6 +239,14 @@ const t = translations[lang as keyof typeof translations];
 </html>
 
 <style>
+  /* Force RTL styles with higher specificity */
+  /* :global([dir="rtl"] h1),
+  :global([dir="rtl"] p) {
+    text-align: right !important;
+    direction: rtl !important;
+  }
+   */
+  /* Apply Arabic font directly to ensure it's used */
   :global(.font-arabic) {
     font-family: 'TheYearofTheCamel', 'Arial', sans-serif !important;
     direction: rtl !important;
